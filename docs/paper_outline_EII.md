@@ -3,19 +3,28 @@
 
 **Status:** Working outline — not for submission  
 **Target journal (preliminary):** Ecological Indicators  
-**Last updated:** 2026-04-02 (rev. 4 — terminology revised; Phases 1 and 2 results incorporated)
+**Last updated:** 2026-04-02 (rev. 5 — Introduction reframed around low-cost grid complement hook)
 
 ---
 
 ## Proposed Title
 
+**Primary option:**
+*"The Edge Interception Index: recovering interface connectivity from the discarded boundaries of regular landscape grids"*
+
+**Alternative:**
+*"From area to interface: the Edge Interception Index as a low-cost connectivity complement to grid-based landscape monitoring"*
+
+**Conservative fallback (original):**
 *"The Edge Interception Index: a systematic transect-based metric for landscape interface connectivity and its application to four decades of habitat dynamics in the Brazilian Cerrado"*
+
+*Note: title selection deferred to near-submission stage. Primary option is preferred for its directness and positioning.*
 
 ---
 
 ## Research Questions
 
-**RQ1.** Does the Edge Interception Index (EII) capture the interface connectivity dimension of landscape configuration in ways not accessible to within-cell area metrics alone?
+**RQ1.** Does the Edge Interception Index — computed from the cell boundaries already present in any grid-based workflow — capture interface connectivity information not accessible to within-cell area metrics alone?
 
 **RQ2.** How do Area and EII diverge in space and time across the study domain, and what landscape processes drive compositional-configurational divergence?
 
@@ -44,35 +53,42 @@ Throughout this document, the term **"compositional-configurational divergence"*
 
 ## 1. Introduction
 
-### 1.1 Opening problem
-- Area-based metrics (proportion of natural habitat within spatial units) are the dominant tool for landscape monitoring at regional scales.
-- Area captures landscape composition but not interface connectivity: two cells with identical area proportions can differ fundamentally in how habitat is distributed relative to their boundaries.
-- This distinction matters ecologically: habitat permeability at unit boundaries governs dispersal and movement, while interior composition determines local habitat quality. Neither dimension alone fully characterizes landscape state.
+### 1.1 Opening hook — the discarded boundary
+- Regular grids are widely used in landscape monitoring and analysis: area-based metrics of habitat cover, land-use change statistics, and biodiversity assessments are routinely computed by intersecting raster maps with grid cells and summarizing pixel values within each polygon.
+- In every grid-based workflow, the cell boundary — the perimeter of each polygon — is computed as an intermediate geometric object and then discarded after the area calculation is complete.
+- We argue that this discarded boundary contains ecologically independent information: treated as a systematic linear transect, the cell perimeter estimates the interface connectivity of each cell with its neighbors — a dimension of landscape configuration that no area-based summary of polygon interiors can capture.
+- The computational cost of this additional step is negligible: the grid already exists, the perimeter extraction is a single geometric operation, and the raster sampling uses the same infrastructure as the area calculation.
 
-### 1.2 Existing approaches and their limitations
-- FRAGSTATS-based metrics (patch area, edge density, shape indices): computed internally to each unit; do not measure cross-boundary permeability at the landscape scale.
+### 1.2 What the boundary measures that area cannot
+- Area metrics capture **composition**: what proportion of natural habitat exists within a spatial unit.
+- The cell perimeter, treated as a transect, captures **interface connectivity**: how permeable the boundary of a spatial unit is to habitat continuity with neighboring units.
+- Two cells with identical area proportions can differ fundamentally in interface connectivity — one may be embedded in a continuous habitat matrix while the other is already isolated by converted land on all sides. This distinction is invisible to area metrics but ecologically consequential for dispersal, gene flow, and ecosystem function.
+- This compositional-configurational divergence is not an anomaly to explain but a signal to detect: it indicates that the two dimensions of landscape state are evolving at different rates, typically as a leading indicator of fragmentation dynamics.
+
+### 1.3 Existing approaches and why they do not fill this gap
+- FRAGSTATS-based metrics (patch area, edge density, shape indices): computed from patch mosaics rather than regular grids; do not provide per-cell interface estimates replicable across time series.
 - Graph-based connectivity models (circuit theory, least-cost paths): powerful but computationally intensive, require species-specific parameterization, and do not scale easily to biome-wide annual time series.
-- Linear transect methods in vegetation ecology (Canfield 1941; Levy & Madden 1933): well-established estimators of cover based on systematic line sampling; not previously applied at landscape scale to raster time series.
+- Edge density and contrast-weighted edge metrics: landscape-level summaries that do not produce cell-level interface estimates compatible with area metrics computed on the same grid.
+- Linear transect methods in vegetation ecology (Canfield 1941; Levy & Madden 1933): well-established estimators of cover from systematic line sampling; their transposition to landscape-scale raster analysis has not been formalized.
 
-### 1.3 The proposed approach
-- We propose reinterpreting the borders of a regular hexagonal grid as a spatially exhaustive set of systematic transects — directly analogous to the line intercept method of vegetation ecology.
-- Each border segment between adjacent cells constitutes a linear transect; the proportion of the segment intercepting natural habitat defines the Edge Interception Index (EII).
-- This transposition from vegetation ecology to landscape ecology provides a conceptually grounded, computationally efficient, and temporally replicable metric of interface connectivity.
-- The hexagonal grid is particularly suited to this approach: six sides per cell sample six directions, providing greater directional isotropy than square grids (four sides, axial bias).
-- Area sampling (polygon interior) and line sampling (polygon perimeter) are complementary estimators: the former estimates composition, the latter estimates interface connectivity. Their joint distribution characterizes landscape state more fully than either alone.
+### 1.4 The proposed approach
+- We formalize the **Edge Interception Index (EII)**: the proportion of a cell's perimeter that intersects natural habitat in a binary raster.
+- This is directly analogous to the line intercept method of vegetation ecology (Canfield 1941): the cell boundary is a systematic transect, each pixel contact with natural habitat is a "hit," and the hit rate estimates interface connectivity.
+- The hexagonal grid is particularly suited to this approach: six border segments at 60° intervals provide near-isotropic directional sampling, compared to four segments at 90° intervals for square grids.
+- EII adds a second column to any existing grid-based analysis: where the first column is area proportion (composition), the second is EII (interface connectivity). The joint distribution of these two columns characterizes landscape state across a two-dimensional space that neither metric spans alone.
 
-### 1.4 Study area and motivation
+### 1.5 Study area and motivation
 - A fixed rectangular domain of 1,500 × 1,500 km in central Brazil, encompassing the core Cerrado, the southern Amazon deforestation frontier, the northern Pantanal, and the Cerrado–Caatinga transition zone.
-- The domain covers the full gradient of land-use intensity documented in central Brazil over the study period — from consolidated agricultural areas in the north (MATOPIBA) to more preserved savannas in the center and south.
-- MapBiomas annual binary rasters (natural vs. non-natural vegetation, 30 m resolution, 1985–2024) provide the input data.
+- The Cerrado is one of the world's most threatened savanna biomes, subject to intense and documented agricultural expansion over the past four decades — providing the landscape configuration diversity and temporal dynamics required for a rigorous methodological evaluation.
+- MapBiomas annual binary rasters (natural vs. non-natural vegetation, 30 m resolution, 1985–2024) provide the input data, enabling a 40-year annual assessment.
 
-### 1.5 Research questions
+### 1.6 Research questions
 *(State RQ1, RQ2, RQ3 as formalized above.)*
 
-### 1.6 Contributions
-1. A formal transect-based metric of landscape interface connectivity derived from regular hexagonal grids, grounded in the line intercept sampling theory of vegetation ecology.
-2. A demonstration that Area and EII capture distinct, complementary dimensions of landscape structure — composition and interface connectivity respectively — and that their divergence is ecologically informative and spatially structured.
-3. A systematic treatment of the Modifiable Areal Unit Problem (MAUP) as quantifiable sampling variance rather than an unavoidable limitation.
+### 1.7 Contributions
+1. A formal transect-based metric of landscape interface connectivity that adds negligible computational overhead to any existing grid-based workflow, grounded in the line intercept sampling theory of vegetation ecology.
+2. A demonstration that the cell boundary — already present in any grid analysis — contains ecologically independent information: compositional-configurational divergence between Area and EII is spatially structured (Moran's I > 0.09 in all years) and grows progressively over four decades of landscape transformation.
+3. A systematic treatment of the Modifiable Areal Unit Problem (MAUP) as quantifiable sampling variance: when the grid is treated as a sampling device rather than a spatial partition, MAUP becomes a property to characterize rather than a limitation to acknowledge.
 
 ---
 
@@ -311,6 +327,5 @@ Comparison structured across three explicit dimensions:
 - Openshaw, S. (1984). *The Modifiable Areal Unit Problem*. Geo Books, Norwich.
 
 ---
-
 
 *Document maintained as part of the EII project. Update after each analytical phase is completed.*
