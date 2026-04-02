@@ -3,7 +3,7 @@
 
 **Status:** Working outline — not for submission  
 **Target journal (preliminary):** Ecological Indicators  
-**Last updated:** 2026-04-02 (rev. 5 — Introduction reframed around low-cost grid complement hook)
+**Last updated:** 2026-04-02 (rev. 6 — frozen; segment decomposition formalized; gaps resolved)
 
 ---
 
@@ -253,6 +253,7 @@ Comparison structured across three explicit dimensions:
 - Algorithm: PELT (Killick et al. 2012) applied independently to each cell's annual EII and Area series.
 - Implementation: Python `ruptures` library; penalty parameter via BIC.
 - Output: year(s) of structural break per cell for EII ($t^*_w$) and Area ($t^*_A$); temporal lag $\Delta_i = t^*_w - t^*_A$.
+- **Status:** Planned analysis — not yet executed. Results will appear in Section 4.5 when complete. This is the only remaining Phase 3 analysis that requires substantial computation (11,500 independent time series). See roadmap step 3.5.
 
 ### 3.9 Spatial autocorrelation of compositional-configurational divergence
 
@@ -332,7 +333,7 @@ Both analyses (3.11.1 and 3.11.2) use exclusively the six segment values $w_{ij}
 ### 4.2 Compositional-configurational divergence dynamics (RQ2)
 - Annual flux of the four landscape states (1985–2024).
 - *Preliminary result: Coupled-High declined from 91.5% to 57.6%; total Type I + Type II increased from 2.5% to 8.4%.*
-- Temporal trend of δ: cauda negativa (P10) widening from −0.061 to −0.093; % cells with δ < 0 increasing from 41.8% to 46.9%.
+- Temporal trend of δ: negative tail (P10) widening from −0.061 to −0.093; % cells with δ < 0 increasing from 41.8% to 46.9%.
 - Moran's I: *significant in all 40 years (p < 0.01); I ranging from 0.094 to 0.136 — divergent states are spatially clustered throughout the series.*
 - Cumulative divergence trace: cells ever in Type I or Type II state across the full series.
 
@@ -345,7 +346,28 @@ Both analyses (3.11.1 and 3.11.2) use exclusively the six segment values $w_{ij}
 - Scale: HEX-10 / HEX-20 / HEX-40 — negligible effect on aggregated distributions.
 - Jitter: mean EII range < 0.005 across 25 realizations; CV < 0.003.
 
-### 4.5 Temporal interval sensitivity (RQ3)
+### 4.5 Change point detection — EII vs. Area structural breaks (RQ2)
+- **Status: pending** — analysis planned, not yet executed (roadmap step 3.5).
+- Expected outputs: distribution of structural break years for EII and Area across cells; frequency distribution of temporal lag $\Delta_i = t^*_w - t^*_A$; spatial map of $\Delta_i$; proportion of cells where EII break precedes Area break.
+- Placeholder for results once PELT analysis is complete.
+
+### 4.6 Segment decomposition — anisotropy and directional gradients (RQ1)
+- **Relationship to RQ1:** treated as an exploratory extension of RQ1. The segment decomposition characterizes the internal structure of the EII independently of the area metric — demonstrating additional informational dimensions of the EII beyond the aggregated scalar. It does not constitute a separate RQ but substantially deepens the answer to RQ1.
+- **Threshold note:** the 0.5 threshold used throughout the state classification (Sections 4.1–4.2) is provisional. Sensitivity to this threshold will be reported in Supplementary S2.
+
+**4.6.1 — Connectivity anisotropy**
+- For each cell and year: $\text{Aniso}_i(t) = \text{SD}(w_{i1},...,w_{i6})$.
+- Spatial map of mean anisotropy per cell across the full series.
+- Annual mean anisotropy for the domain — temporal trend.
+- Expected result: cells at active landscape frontiers show persistently higher anisotropy than cells in stable landscapes.
+
+**4.6.2 — Directional gradients**
+- Three gradient maps per year (N-S, NE-SW, NW-SE axes).
+- Vector field of dominant gradient direction per cell.
+- Temporal trend in gradient magnitude: cells where gradients intensify over time locate advancing transformation frontiers.
+- Expected result: directional gradients are spatially coherent and align with known deforestation vectors in the domain (e.g., south-to-north expansion in MATOPIBA).
+
+### 4.7 Temporal interval sensitivity (RQ3)
 - Comparison of 5-year vs. 10-year snapshot matrices.
 
 ---
@@ -378,6 +400,12 @@ Both analyses (3.11.1 and 3.11.2) use exclusively the six segment values $w_{ij}
 - Relationship to edge density metrics (FRAGSTATS): EII is boundary-referenced and cell-scale rather than patch-referenced and landscape-scale.
 - Relationship to graph-based connectivity: EII weights ($w_{ij}$) can serve directly as edge weights in a spatial graph — future work.
 
+### 5.6 The segment vector as a directional landscape descriptor
+- The decomposition of EII into six directional components reveals information not available in the aggregated scalar: anisotropy identifies cells at directional landscape features (corridors, ecotones, advancing frontiers); directional gradients locate and orient active transformation zones.
+- These properties are intrinsic to the hexagonal geometry — they emerge from the six fixed orientations of the border segments and require no additional parameterization.
+- The segment vector implicitly defines a spatial graph on the landscape: cells are nodes, shared boundaries are edges, and the component EII values are natural edge weights. This graph is latent in any hexagonal grid analysis; the segment decomposition makes it explicit.
+- Connection to future work: the full graph-theoretic analysis (connected components, betweenness, corridor identification) is reserved for Paper 2.
+
 ---
 
 ## 6. Conclusions
@@ -393,21 +421,31 @@ Both analyses (3.11.1 and 3.11.2) use exclusively the six segment values $w_{ij}
 
 | Figure | Content | Source |
 |---|---|---|
-| **Fig. 1** | Conceptual diagram: hexagonal cell, perimeter transect, pixel contacts, δ definition | Illustration |
-| **Fig. 2** | Example cells in each quadrant of Area × EII space | MapBiomas tiles |
+| **Fig. 1** | Conceptual diagram: hexagonal cell, perimeter as transect, six segments, pixel contacts, δ definition | Illustration |
+| **Fig. 2** | Example cells in each of the four quadrants of Area × EII space | MapBiomas tiles |
 | **Fig. 3** | Annual flux of four landscape states (1985–2024) + cumulative divergence trace map | Sections 4.1, 4.2 |
 | **Fig. 4** | Annual δ distribution: trend (mean ± IQR), violin for selected years | Section 4.2 |
 | **Fig. 5** | Moran's I over time + spatial maps of Area, EII, and δ for 1985 and 2024 | Sections 4.2, 4.3 |
 | **Fig. 6** | MAUP sensitivity: jitter stability, hex vs. square, scale comparison | Section 4.4 |
+| **Fig. 7** | Segment decomposition: anisotropy map + directional gradient vector field | Section 4.6 |
 
 ---
 
 ## Supplementary Material (planned)
 
 - S1: Full 5×5 frequency matrices for all snapshot periods.
-- S2: Temporal interval sensitivity (5-year vs. 10-year snapshots).
-- S3: Change point detection parameter sensitivity.
+- S2: Threshold sensitivity (0.5 midpoint vs. quantile-based classification) for state assignments.
+- S3: Change point detection parameter sensitivity (BIC penalty variants).
 - S4: Pipeline code and reproducibility documentation.
+
+---
+
+## Status at freeze
+
+**Frozen:** 2026-04-02  
+**Analyses complete:** Phases 1 and 2 (MAUP sensitivity, annual time series, divergence analysis, Moran's I).  
+**Pending before submission:** Phase 3 step 3.5 (change point detection → Section 4.5); segment decomposition analysis (→ Section 4.6); final figures (→ Sections 4.1–4.7); Methods writing.  
+**Open parameter:** divergence threshold (0.5 provisional; sensitivity reported in Supplementary S2).
 
 ---
 
