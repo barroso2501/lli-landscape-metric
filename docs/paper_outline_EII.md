@@ -3,7 +3,7 @@
 
 **Status:** Working outline — not for submission  
 **Target journal (preliminary):** Ecological Indicators  
-**Last updated:** 2026-03-30 (rev. 3 — sections 3.1 and 3.3 finalized)
+**Last updated:** 2026-04-02 (rev. 4 — terminology revised; Phases 1 and 2 results incorporated)
 
 ---
 
@@ -15,11 +15,24 @@
 
 ## Research Questions
 
-**RQ1.** Does the Edge Interception Index (EII) provide information on habitat configuration that is not captured by within-cell area metrics alone?
+**RQ1.** Does the Edge Interception Index (EII) capture the interface connectivity dimension of landscape configuration in ways not accessible to within-cell area metrics alone?
 
-**RQ2.** Do structural breaks in annual EII time series coincide with structural breaks in area metrics, and where — in space and in time — do they diverge across the Cerrado?
+**RQ2.** How do Area and EII diverge in space and time across the study domain, and what landscape processes drive compositional-configurational divergence?
 
 **RQ3.** How robust are EII estimates to grid configuration choices (shape, scale, and placement), and how sensitive are temporal patterns to the choice of sampling interval?
+
+---
+
+## Terminology note
+
+Throughout this document, the term **"compositional-configurational divergence"** replaces earlier uses of "decoupling." Area and EII measure fundamentally distinct dimensions of landscape structure — composition (what is inside a cell) and interface connectivity (how permeable the cell boundary is). Divergence between them is not an anomaly but an informative signal about landscape state. The four quadrants of the Area × EII space are named accordingly:
+
+| Quadrant | Area | EII | Landscape interpretation |
+|---|---|---|---|
+| Coupled-High | High | High | Intact: abundant interior habitat, connected interface |
+| Coupled-Low | Low | Low | Degraded: scarce interior habitat, isolated interface |
+| Type I | High | Low | Interior preserved, interface degraded |
+| Type II | Low | High | Interior lost, interface still connected |
 
 ---
 
@@ -33,31 +46,32 @@
 
 ### 1.1 Opening problem
 - Area-based metrics (proportion of natural habitat within spatial units) are the dominant tool for landscape monitoring at regional scales.
-- Area alone does not capture interface connectivity: two cells with identical area proportions can differ fundamentally in how habitat is distributed relative to their boundaries.
-- This gap is consequential for conservation planning, since habitat permeability at unit boundaries governs movement and dispersal at the landscape scale.
+- Area captures landscape composition but not interface connectivity: two cells with identical area proportions can differ fundamentally in how habitat is distributed relative to their boundaries.
+- This distinction matters ecologically: habitat permeability at unit boundaries governs dispersal and movement, while interior composition determines local habitat quality. Neither dimension alone fully characterizes landscape state.
 
 ### 1.2 Existing approaches and their limitations
-- FRAGSTATS-based metrics (patch area, edge density, shape indices): computed internally to each unit; do not measure cross-boundary permeability.
-- Graph-based connectivity models (circuit theory, least-cost paths): powerful but computationally intensive, require species-specific parameterization, and do not scale easily to biome-wide time series.
+- FRAGSTATS-based metrics (patch area, edge density, shape indices): computed internally to each unit; do not measure cross-boundary permeability at the landscape scale.
+- Graph-based connectivity models (circuit theory, least-cost paths): powerful but computationally intensive, require species-specific parameterization, and do not scale easily to biome-wide annual time series.
 - Linear transect methods in vegetation ecology (Canfield 1941; Levy & Madden 1933): well-established estimators of cover based on systematic line sampling; not previously applied at landscape scale to raster time series.
 
 ### 1.3 The proposed approach
-- We propose reinterpreting the borders of a regular hexagonal grid as a spatially exhaustive set of systematic transects.
-- Each border segment between adjacent cells constitutes a linear transect; contacts with natural habitat pixels along the transect define the Edge Interception Index (EII).
-- This transposition of the line intercept method from vegetation ecology to landscape ecology provides a conceptually grounded, computationally efficient, and temporally replicable metric of interface connectivity.
+- We propose reinterpreting the borders of a regular hexagonal grid as a spatially exhaustive set of systematic transects — directly analogous to the line intercept method of vegetation ecology.
+- Each border segment between adjacent cells constitutes a linear transect; the proportion of the segment intercepting natural habitat defines the Edge Interception Index (EII).
+- This transposition from vegetation ecology to landscape ecology provides a conceptually grounded, computationally efficient, and temporally replicable metric of interface connectivity.
 - The hexagonal grid is particularly suited to this approach: six sides per cell sample six directions, providing greater directional isotropy than square grids (four sides, axial bias).
+- Area sampling (polygon interior) and line sampling (polygon perimeter) are complementary estimators: the former estimates composition, the latter estimates interface connectivity. Their joint distribution characterizes landscape state more fully than either alone.
 
 ### 1.4 Study area and motivation
-- The Brazilian Cerrado: one of the world's most threatened savanna biomes, subject to intense agricultural expansion over the past four decades.
-- ~2 million km² with documented, non-stationary deforestation dynamics — distinct regimes separated by policy and market shifts.
-- A biome-scale, annually resolved raster time series (MapBiomas, 30 m resolution, 1985–2024) provides an ideal test case for a new landscape metric.
+- A fixed rectangular domain of 1,500 × 1,500 km in central Brazil, encompassing the core Cerrado, the southern Amazon deforestation frontier, the northern Pantanal, and the Cerrado–Caatinga transition zone.
+- The domain covers the full gradient of land-use intensity documented in central Brazil over the study period — from consolidated agricultural areas in the north (MATOPIBA) to more preserved savannas in the center and south.
+- MapBiomas annual binary rasters (natural vs. non-natural vegetation, 30 m resolution, 1985–2024) provide the input data.
 
 ### 1.5 Research questions
 *(State RQ1, RQ2, RQ3 as formalized above.)*
 
 ### 1.6 Contributions
-1. A formal transect-based metric of landscape interface connectivity derived from regular grids.
-2. A biome-scale, four-decade characterization of Area–EII joint distributions and their structural breaks.
+1. A formal transect-based metric of landscape interface connectivity derived from regular hexagonal grids, grounded in the line intercept sampling theory of vegetation ecology.
+2. A demonstration that Area and EII capture distinct, complementary dimensions of landscape structure — composition and interface connectivity respectively — and that their divergence is ecologically informative and spatially structured.
 3. A systematic treatment of the Modifiable Areal Unit Problem (MAUP) as quantifiable sampling variance rather than an unavoidable limitation.
 
 ---
@@ -67,17 +81,17 @@
 ### 2.1 The line intercept method in vegetation ecology
 - Canfield (1941): foundational formulation of line intercept sampling for cover estimation.
 - Statistical properties: unbiased estimator of cover under random or systematic placement.
-- Transposition to landscape scale: border segments as systematic, spatially exhaustive transects.
+- Transposition to landscape scale: border segments as systematic, spatially exhaustive transects. The grid is not merely a spatial partition but a sampling device.
 
-### 2.2 The Modifiable Areal Unit Problem in landscape ecology
+### 2.2 Composition vs. configuration in landscape ecology
+- McGarigal & Marks (1995): foundational distinction between landscape composition (what is present) and configuration (how it is arranged spatially).
+- Area metrics capture composition. EII captures configuration at the interface level.
+- Gap: no existing metric simultaneously captures (a) systematic spatial coverage, (b) temporal replicability at annual resolution, and (c) interface-level configuration.
+
+### 2.3 The Modifiable Areal Unit Problem in landscape ecology
 - Classical MAUP: scale effect and zoning effect.
 - Existing treatments: typically acknowledged as a caveat, rarely quantified.
 - Reframing: when the grid is treated as a sampling device, MAUP becomes sampling variance — a quantity that can be estimated and reported.
-
-### 2.3 Landscape metrics and connectivity
-- Brief review of area metrics (proportion of natural habitat) and their widespread use.
-- Brief review of edge and boundary metrics (edge density, contrast-weighted edge).
-- Gap: no metric simultaneously captures (a) systematic spatial coverage, (b) temporal replicability at annual resolution, and (c) interface-level connectivity.
 
 ---
 
@@ -93,219 +107,194 @@
 
 ### 3.2 Input data
 - MapBiomas Collection [X], 30 m resolution, 1985–2024.
-- Binarization: natural vegetation (class 1) vs. non-natural (class 0).
-- Annual time series: 40 raster layers per analysis unit.
+- Binarization: natural vegetation (value 1) vs. non-natural (value 0); outside-domain pixels encoded as 255 (nodata).
+- Annual time series: 40 raster layers.
+- **Technical note on nodata encoding:** raster metadata declares nodata=0, but 0 = non-natural vegetation (valid data). All EII and Area calculations use nodata=255 to correctly include non-natural pixels in the denominator.
 - Rationale for binary classification: focus on habitat presence/absence rather than vegetation type diversity.
 
 ### 3.3 Grid design
 
 **Projection and domain:**
 - All grids generated in ESRI:102033 (South America Albers Equal Area Conic), ensuring equal-area cells throughout the domain.
-- Grid extent: the 1,500 × 1,500 km rectangular domain defined in Section 3.1. All cells are fully contained within the domain — no boundary clipping applied.
+- Grid extent: the 1,500 × 1,500 km rectangular domain. All cells fully contained within the domain — no boundary clipping applied.
 
 **Primary configuration — hexagonal grid, 20,000 ha:**
-- Cell area: 20,000 ha (200 km²); side length: ~15.2 km; diagonal: ~26.2 km.
-- Number of cells: ~11,250.
+- Cell area: 20,000 ha (200 km²); side length: ~15.2 km; diagonal: ~26.2 km; actual cells: 11,500.
 - Rationale for hexagonal geometry: six border segments at 0°, 60°, 120°, 180°, 240°, 300° provide near-isotropic directional sampling, compared to four segments at 0°, 90°, 180°, 270° for square grids.
-- Rationale for 20,000 ha as primary scale: (1) ecologically interpretable as the watershed / small-municipality scale, where EII measures inter-unit connectivity at a functionally coherent resolution; (2) perimeter length (~54 km) provides sufficient pixel contacts for estimator stability; (3) alignment with territorial planning scales commonly used in Brazilian conservation policy.
+- Rationale for 20,000 ha as primary scale: (1) ecologically interpretable as the watershed / small-municipality scale; (2) perimeter length (~54 km) provides sufficient pixel contacts for estimator stability; (3) alignment with territorial planning scales commonly used in Brazilian conservation policy.
 
 **Scale sensitivity configurations:**
 
-| Configuration | Cell area | Side length | Approx. cells | Ecological scale |
+| Configuration | Cell area | Side length | Actual cells | Ecological scale |
 |---|---|---|---|---|
-| Fine | 10,000 ha | ~10.7 km | ~22,500 | Property / forest fragment |
-| **Primary** | **20,000 ha** | **~15.2 km** | **~11,250** | **Watershed / small municipality** |
-| Coarse | 40,000 ha | ~21.5 km | ~5,625 | Regional mosaic / corridor |
+| Fine | 10,000 ha | ~10.7 km | 22,842 | Property / forest fragment |
+| **Primary** | **20,000 ha** | **~15.2 km** | **11,500** | **Watershed / small municipality** |
+| Coarse | 40,000 ha | ~21.5 km | 5,822 | Regional mosaic / corridor |
 
-- Scale ratio: ×2 in side length, ×4 in area between consecutive levels — a geometrically consistent hierarchy.
-- The three scales bracket the range identified by prior landscape ecology studies as most informative for savanna fragmentation dynamics (5,000–50,000 ha).
-- Hexagonal grids do not nest perfectly across scales (unlike square grids); scale comparisons are therefore treated as independent configurations, not a hierarchical decomposition.
+- Scale ratio: ×2 in side length, ×4 in area between consecutive levels.
+- Hexagonal grids do not nest perfectly across scales; scale comparisons are treated as independent configurations.
 
 **Shape sensitivity configuration — square grid:**
-- Cell area: 20,000 ha (equivalent to primary hexagonal); side length: ~14.14 km.
-- Used exclusively for shape comparison in Section 3.7.1; not used as a primary analysis configuration.
-- Note: equal area implies unequal perimeter (P_square ≈ 56.6 km vs. P_hexagon ≈ 54.4 km); this difference is treated as a known property and reported explicitly (see Section 3.7.1).
+- Cell area: 20,000 ha; side length: ~14.1 km; actual cells: 11,449.
+- Note: equal area implies unequal perimeter (P_square ≈ 56.6 km vs. P_hexagon ≈ 54.4 km); reported explicitly (see Section 3.7.1).
 
 ### 3.4 EII formalization
-**Within-cell area metric:**
+
+**Within-cell area metric (composition):**
 
 $$A_i(t) = \frac{\sum_{p \in C_i} \mathbf{1}[r_p(t) = 1]}{|C_i|}$$
 
-where $C_i$ is the set of pixels within cell $i$, $r_p(t)$ is the raster value of pixel $p$ at time $t$, and $|C_i|$ is the total number of valid pixels.
+where $C_i$ is the set of valid pixels within cell $i$, $r_p(t)$ is the binary raster value of pixel $p$ at time $t$, and $|C_i|$ is the total count of valid pixels. Computed using `zonal_stats` with `stats=['count','sum']` on polygon interiors (`all_touched=False`).
 
-**Edge Interception Index (EII):**
+**Edge Interception Index (interface connectivity):**
 
 $$w_i(t) = \frac{L_i^{\text{nat}}(t)}{P_i^{\text{obs}}(t)}$$
 
-where $L_i^{\text{nat}}(t)$ is the length (in pixels) of the cell perimeter that intersects natural habitat at time $t$, and $P_i^{\text{obs}}(t)$ is the total observable perimeter length (excluding pixels with nodata values).
+where $L_i^{\text{nat}}(t)$ is the count of perimeter pixels intercepting natural habitat at time $t$, and $P_i^{\text{obs}}(t)$ is the total count of valid perimeter pixels. Computed using `zonal_stats` with `categorical=True`, `all_touched=True` on perimeter (boundary) geometries.
 
-- $w_i(t) \in [0, 1]$: 0 = perimeter entirely surrounded by non-natural pixels; 1 = perimeter entirely surrounded by natural habitat.
-- For border cells of the study domain: $P_i^{\text{obs}} < P_i$ (total perimeter); completeness ratio $P_i^{\text{obs}} / P_i$ is reported as a data quality flag.
-- Computational implementation: perimeter geometries extracted from hexagonal polygons via boundary conversion; zonal statistics computed with `all_touched=True` (essential for linear geometries) using `rasterstats`.
+Both metrics $\in [0, 1]$.
 
 **Connection to the line intercept method:**
-- Each border segment is a systematic transect.
+- Each of the six hexagonal border segments constitutes a systematic transect.
 - Each pixel contact with natural habitat is a "hit."
-- $w_i(t)$ is thus the hit rate along the perimeter transect — directly analogous to the cover estimator of Canfield (1941).
+- $w_i(t)$ is the hit rate along the perimeter transect — directly analogous to the cover estimator of Canfield (1941).
+- The six border segments of each hexagon sample six distinct directions (0°, 60°, 120°, 180°, 240°, 300°), providing near-isotropic coverage of the landscape.
+
+**Compositional-configurational divergence:**
+
+$$\delta_i(t) = w_i(t) - A_i(t)$$
+
+$\delta_i > 0$: interface more connected than interior composition suggests.  
+$\delta_i < 0$: interface more degraded than interior composition suggests.  
+$\delta_i = 0$: composition and interface connectivity aligned.
 
 ### 3.5 Annual time series construction
-- EII computed for all years 1985–2024: 40 annual layers × 19,183 cells.
-- Area metric ($A_i$) computed for the same period (already available).
-- Output: two matrices of dimensions 19,183 × 40.
+- EII and Area computed for all 40 years (1985–2024): two matrices of dimensions 11,500 cells × 40 years.
 
 ### 3.6 Temporal interval selection and sensitivity
 - Primary analysis: annual resolution (1985–2024).
-- Change point detection applied to annual series (see Section 3.8).
-- Snapshot analysis: intervals anchored to documented deforestation regimes in the Cerrado:
-  - 1985 (baseline)
-  - 1995 (pre-Soy Moratorium era)
-  - 2004 (historical peak deforestation)
-  - 2012 (new Brazilian Forest Code)
-  - 2020 (end of monitoring period)
-- Sensitivity test: comparison of results under 5-year vs. 10-year snapshot intervals to demonstrate stability of aggregated distributions.
+- Snapshot analysis: intervals anchored to documented deforestation regimes:
+  - 1985 (baseline), 1995, 2004 (historical peak deforestation), 2012 (new Forest Code), 2020, 2024.
+- Sensitivity test: comparison of results under 5-year vs. 10-year snapshot intervals.
 
 ### 3.7 Sensitivity to grid configuration (MAUP)
+
 **3.7.1 Shape effect: hexagon vs. square**
 
-*Design rationale:* Comparing hexagonal and square grids at equivalent cell area introduces a known geometric confound: equal area implies unequal perimeter length, since the hexagon is isoperimetrically more efficient than the square (P_hex ≈ 0.93 × P_sq for equal area). Rather than treating this as a flaw to eliminate, the comparison is structured to separate three distinct dimensions of shape effect:
+Comparison structured across three explicit dimensions:
 
-- **Dimension 1 — Aggregated distribution convergence** (primary test)
-  - Square grid generated at equivalent cell area to the hexagonal grid.
-  - EII computed under both configurations for 1985 and 2020.
-  - Comparison: aggregated 5×5 Area × EII frequency matrices and their difference.
-  - Expected result: if distributions converge, the method is robust to shape choice at the biome scale.
-
-- **Dimension 2 — Estimator variance per unit area** (statistical argument)
-  - Coefficient of variation (CV) of EII computed across cells for both geometries.
-  - Expected result: hexagonal grid produces lower CV than square grid for equivalent area, reflecting its shorter perimeter relative to area and its superior isoperimetric efficiency.
-  - This difference in variance is a property of the geometry, not a bias — it constitutes a statistical argument for preferring the hexagonal configuration.
-
-- **Dimension 3 — Directional isotropy** (theoretical argument, no additional empirical test required)
-  - Hexagon: 6 border segments at 0°, 60°, 120°, 180°, 240°, 300° — approximately isotropic.
-  - Square: 4 border segments at 0°, 90°, 180°, 270° — axially biased.
-  - Consequence: square grids systematically undersample diagonal landscape features (e.g., rivers, roads, ecotones oriented at 45°).
-  - This property is documentable analytically; empirical demonstration is optional (e.g., by comparing EII values for landscape features of known orientation).
-
-*Reporting strategy:* The three dimensions are presented in sequence in Section 4.4, moving from empirical (Dimensions 1–2) to theoretical (Dimension 3). The conclusion is that the hexagonal grid is preferable on all three grounds, while the method remains robust to shape choice at the level of aggregated distributions.
+- **Dimension 1 — Aggregated distribution convergence:** 5×5 Area × EII matrices compared between HEX-20 and SQ-20. *Result (preliminary): maximum difference < 0.008 across all quadrants in both 1985 and 2020.*
+- **Dimension 2 — Estimator variance per unit area:** CV of EII compared between HEX-20 and SQ-20. *Result (preliminary): CV_hex < CV_sq, consistent with hexagon's superior isoperimetric efficiency.*
+- **Dimension 3 — Directional isotropy:** hexagon samples 6 × 60° directions; square samples 4 × 90° directions. Analytical argument — no additional empirical test required.
 
 **3.7.2 Scale effect: multi-resolution comparison**
-- EII computed for [2–3 cell sizes] within hexagonal geometry.
-- Assessment: how does the Area × EII distribution change with scale?
-- Criterion for scale selection: stability of estimator (coefficient of variation across cells as a function of perimeter length).
+- EII and Area distributions compared across HEX-10, HEX-20, HEX-40.
+- *Result (preliminary): mean EII differs by < 0.001 across scales in both 1985 and 2020; scale effect on aggregated distributions is negligible.*
 
 **3.7.3 Zoning effect: systematic grid displacement**
-- 24 displaced realizations: 8 directions × 3 distances (1/6, 1/3, 1/2 of cell side length) + original grid = 25 realizations total.
-- For each realization: compute EII; aggregate to 5×5 Area × EII frequency matrix.
-- Output: mean matrix (central estimate), standard deviation matrix (sampling uncertainty), coefficient of variation per cell (spatial instability map).
-- Interpretation: cells with high CV across realizations are located at abrupt landscape boundaries — a substantively informative, not merely methodological, result.
+- 25 realizations: 8 directions × 3 distances (1/6, 1/3, 1/2 of side length) + original.
+- *Result (preliminary): mean EII varies by < 0.005 across 25 realizations; CV across realizations < 0.003. EII estimates are highly robust to grid placement.*
 
 ### 3.8 Change point detection
-- Algorithm: PELT (Pruned Exact Linear Time; Killick et al. 2012) applied independently to each cell's annual EII and annual Area series.
-- Implementation: Python `ruptures` library; penalty parameter selected via BIC.
-- Output per cell: year(s) of structural break in EII ($t^*_w$) and in Area ($t^*_A$).
-- Derived variable: temporal lag $\delta_i = t^*_w - t^*_A$ (positive = EII changes before Area; negative = Area changes before EII).
-- Aggregation: frequency distribution of $\delta$ across cells; spatial map of $\delta$.
+- Algorithm: PELT (Killick et al. 2012) applied independently to each cell's annual EII and Area series.
+- Implementation: Python `ruptures` library; penalty parameter via BIC.
+- Output: year(s) of structural break per cell for EII ($t^*_w$) and Area ($t^*_A$); temporal lag $\Delta_i = t^*_w - t^*_A$.
 
-### 3.9 Area × EII joint distribution analysis
-- Discretization: both $A_i$ and $w_i$ binned into five 20% classes → 5×5 frequency matrix per time period.
-- Metrics derived from the matrix:
-  - Total mass in diagonal quadrants (coupled states) vs. off-diagonal (decoupled states).
-  - Difference matrices between periods: identifies states gaining or losing mass.
-- Decoupling typology:
-  - Type I (High Area, Low EII): habitat interior preserved but interface degraded.
-  - Type II (Low Area, High EII): interior lost but interface still connected.
+### 3.9 Spatial autocorrelation of divergence
+- Global Moran's I computed annually on the binary divergence variable (Type I or Type II vs. coupled).
+- Queen contiguity spatial weights, row-standardized; 99 permutations.
+- Cumulative divergence trace: cells ever in divergent state across the full series.
+
+### 3.10 Continuous divergence analysis (δ)
+- Annual distribution of $\delta_i(t)$ across cells.
+- Metrics: mean, median, SD, P10, P25, P75, P90; % cells with δ < 0, δ > 0, |δ| < 0.05.
 
 ---
 
 ## 4. Results
 
-### 4.1 EII as an independent information source (RQ1)
+### 4.1 EII as a complementary information source (RQ1)
 - Correlation between $A_i(t)$ and $w_i(t)$ across cells and time periods.
-- Residual analysis: cells where EII deviates substantially from area-predicted values.
-- Frequency of decoupled states (Type I and Type II) across the time series.
-- Key figure: scatter plot Area × EII for two contrasting periods (e.g., 1985 and 2020) with decoupling quadrants highlighted.
+- Distribution of $\delta_i(t)$: % cells near zero, widening of distribution over time.
+- Frequency of Type I and Type II states across the time series.
+- *Preliminary result: in 1985, 75.8% of cells had |δ| < 0.05; by 2024, this fell to 58.5% — the domain became progressively more heterogeneous in the composition-configuration space.*
 
-### 4.2 Structural breaks and temporal divergence (RQ2)
-- Distribution of changepoint years for EII and Area across cells.
-- Frequency distribution of temporal lag $\delta_i$.
-- Proportion of cells where EII changepoint precedes Area changepoint (potential early-warning signal).
-- Spatial map of $\delta_i$ across the Cerrado — regional patterns of lead/lag.
-- Narrative: which landscape processes (deforestation frontier, agricultural consolidation) are associated with each lag pattern?
+### 4.2 Compositional-configurational divergence dynamics (RQ2)
+- Annual flux of the four landscape states (1985–2024).
+- *Preliminary result: Coupled-High declined from 91.5% to 57.6%; total Type I + Type II increased from 2.5% to 8.4%.*
+- Temporal trend of δ: cauda negativa (P10) widening from −0.061 to −0.093; % cells with δ < 0 increasing from 41.8% to 46.9%.
+- Moran's I: *significant in all 40 years (p < 0.01); I ranging from 0.094 to 0.136 — divergent states are spatially clustered throughout the series.*
+- Cumulative divergence trace: cells ever in Type I or Type II state across the full series.
 
-### 4.3 Biome-scale dynamics (RQ2 — snapshot analysis)
-- 5×5 Area × EII frequency matrices for anchored snapshots (1985, 1995, 2004, 2012, 2020).
+### 4.3 Domain-scale dynamics — snapshot analysis (RQ2)
+- 5×5 Area × EII frequency matrices for anchored snapshots.
 - Difference matrices between periods.
-- Interpretation: which states gained and lost mass in each deforestation regime?
 
 ### 4.4 Grid configuration sensitivity (RQ3)
-- Hexagon vs. square: comparison of aggregated 5×5 matrices; quantification of directional bias in square grid.
-- Scale sensitivity: how Area × EII distributions shift across cell sizes.
-- Jitter analysis: mean, SD, and CV of EII across 25 grid realizations. Spatial map of CV.
-- Summary statement: EII estimates are robust to grid placement within [X]% displacement; instability concentrates at landscape transition zones.
-
-EII estimates were highly robust to grid placement: across 25 systematic displacements of the HEX-20 grid, the mean EII varied by less than 0.005 in both 1985 and 2020, with a coefficient of variation below 0.003 across realizations. Scale had negligible effect on aggregated estimates, with mean EII differing by less than 0.001 across cell sizes of 10,000, 20,000, and 40,000 ha. Hexagonal and square configurations at equivalent cell area produced virtually identical aggregated distributions (Δmean < 0.001), confirming that the method is robust to grid shape choice at the biome scale.
+- Shape: HEX-20 vs. SQ-20 — three-dimensional comparison (convergence, estimator variance, isotropy).
+- Scale: HEX-10 / HEX-20 / HEX-40 — negligible effect on aggregated distributions.
+- Jitter: mean EII range < 0.005 across 25 realizations; CV < 0.003.
 
 ### 4.5 Temporal interval sensitivity (RQ3)
 - Comparison of 5-year vs. 10-year snapshot matrices.
-- Demonstration that aggregated distributions are stable under alternative interval choices.
 
 ---
 
 ## 5. Discussion
 
-### 5.1 What EII reveals that area does not
-- Decoupled states are not rare: frequency of Type I and Type II across the Cerrado and through time.
-- Ecological interpretation: Type I cells may represent matrix-surrounded remnants where interior habitat persists but connectivity is already severed; Type II cells may represent landscapes in early-stage conversion where interface is still functional.
-- Implications for reserve design and biological corridor planning.
+### 5.1 EII as a compositional-configurational divergence detector
+- Area and EII measure different dimensions of landscape structure: composition (interior) and interface connectivity (boundary). Their divergence is not anomalous but informative.
+- Type I cells (high area, low EII): interior habitat preserved but boundary isolation already advanced — potential matrix-surrounded remnants.
+- Type II cells (low area, high EII): interior largely converted but still embedded in a connected matrix — landscapes in early-stage conversion.
+- Both types increase over time and are spatially clustered (Moran's I > 0.09 throughout), confirming that divergence is not noise but a structured spatial signal associated with active transformation frontiers.
 
-### 5.2 EII as a temporal early-warning indicator
-- Discussion of cells where EII changepoint precedes Area changepoint.
-- Hypothesis: interface degradation precedes interior loss in landscapes subject to edge-in conversion dynamics.
-- Limitations: change point detection with 40 annual observations; sensitivity to algorithm parameterization.
+### 5.2 The δ signal and its ecological interpretation
+- The negative tail of the δ distribution widens progressively — interface connectivity degrades faster than interior area in a growing fraction of cells.
+- Hypothesis: edge-in conversion dynamics produce Type I states as the leading edge of fragmentation, before interior loss is detectable by area metrics.
+- This positions EII as an early-configuration indicator complementary to area metrics.
 
 ### 5.3 MAUP reframed as sampling variance
-- Contrast with classical treatment of MAUP as limitation.
-- The grid as a sampling device: spatial uncertainty is quantifiable and ecologically interpretable.
-- Regions of high jitter CV as indicators of landscape transition zones — an output, not a flaw.
-- Hexagonal grids as preferred geometry for transect-based connectivity metrics.
+- The grid as a sampling device: spatial uncertainty is quantifiable (CV < 0.003 across 25 jitter realizations) and ecologically interpretable.
+- Regions of high jitter instability — if present — would locate abrupt landscape boundaries, not methodological artifacts.
+- Hexagonal grids are preferable to square grids: lower estimator variance per unit area, greater directional isotropy.
 
 ### 5.4 Methodological scope and transferability
-- The method is raster-agnostic: applicable to any binary habitat map at any resolution.
-- Scalability: computationally efficient pipeline with checkpoint architecture; applicable to continental-scale analyses.
-- Limitations: EII measures perimeter-level connectivity, not patch-level or functional connectivity; does not account for species dispersal abilities; border cells require completeness correction.
+- Raster-agnostic: applicable to any binary habitat map at any resolution.
+- Scalable: checkpoint-based pipeline processes 40 annual rasters in a single run.
+- Limitations: EII measures perimeter-level connectivity, not functional connectivity; does not account for species-specific dispersal; requires hardcoded nodata handling when raster metadata encoding is ambiguous.
 
 ### 5.5 Connections to existing literature
-- Relationship to edge density metrics (FRAGSTATS): EII is a boundary-referenced, not patch-referenced, metric.
-- Relationship to graph-based connectivity: EII weights ($w_{ij}$) can be used directly as edge weights in a spatial graph — connection to future work.
-- Relationship to percolation theory: high-EII cells form percolating corridors; threshold behavior warrants future investigation.
+- Relationship to composition/configuration distinction (McGarigal & Marks 1995): Area = composition estimator; EII = configuration estimator at interface level.
+- Relationship to edge density metrics (FRAGSTATS): EII is boundary-referenced and cell-scale rather than patch-referenced and landscape-scale.
+- Relationship to graph-based connectivity: EII weights ($w_{ij}$) can serve directly as edge weights in a spatial graph — future work.
 
 ---
 
 ## 6. Conclusions
 
-- The Edge Interception Index, derived from the line intercept method of vegetation ecology, provides a computationally efficient and ecologically interpretable metric of landscape interface connectivity.
-- Applied to the Cerrado over four decades, EII reveals decoupling states — particularly interface degradation preceding area loss — that area-based metrics fail to detect.
-- MAUP effects are quantifiable as sampling variance and are ecologically informative.
-- The method is transferable to any binary raster time series and scalable to continental extents.
+- The Edge Interception Index, grounded in the line intercept sampling theory of vegetation ecology, provides an efficient and interpretable metric of landscape interface connectivity from any binary raster time series.
+- Area and EII capture complementary dimensions — composition and interface connectivity — and their divergence characterizes landscape states that area metrics cannot distinguish.
+- Applied to 40 years of habitat dynamics in central Brazil, EII reveals a progressive widening of compositional-configurational divergence, spatially structured along active transformation frontiers (Moran's I significant in all years).
+- MAUP effects are quantifiable as sampling variance (CV < 0.003) and the method is robust across shape, scale, and placement choices.
 
 ---
 
 ## Figures (planned)
 
-| Figure | Content | Source analysis |
+| Figure | Content | Source |
 |---|---|---|
-| **Fig. 1** | Conceptual diagram: hexagonal cell, perimeter as transect, pixel contacts | Illustration |
-| **Fig. 2** | Example cells showing Area × EII decoupling (visual tiles) | MapBiomas tiles |
-| **Fig. 3** | Area × EII scatter + 5×5 matrices for 1985 and 2020 + difference matrix | Section 4.1, 4.3 |
-| **Fig. 4** | Maps of $A_i$, $w_i$, and decoupling type across the Cerrado | Section 4.3 |
-| **Fig. 5** | Changepoint analysis: distribution of $\delta_i$; spatial map of lead/lag | Section 4.2 |
-| **Fig. 6** | MAUP sensitivity: jitter CV map; hex vs. square comparison; scale comparison | Section 4.4 |
+| **Fig. 1** | Conceptual diagram: hexagonal cell, perimeter transect, pixel contacts, δ definition | Illustration |
+| **Fig. 2** | Example cells in each quadrant of Area × EII space | MapBiomas tiles |
+| **Fig. 3** | Annual flux of four landscape states (1985–2024) + cumulative divergence trace map | Sections 4.1, 4.2 |
+| **Fig. 4** | Annual δ distribution: trend (mean ± IQR), violin for selected years | Section 4.2 |
+| **Fig. 5** | Moran's I over time + spatial maps of Area, EII, and δ for 1985 and 2024 | Sections 4.2, 4.3 |
+| **Fig. 6** | MAUP sensitivity: jitter stability, hex vs. square, scale comparison | Section 4.4 |
 
 ---
 
 ## Supplementary Material (planned)
 
-- S1: Full 5×5 frequency matrices for all 5 snapshot periods.
+- S1: Full 5×5 frequency matrices for all snapshot periods.
 - S2: Temporal interval sensitivity (5-year vs. 10-year snapshots).
 - S3: Change point detection parameter sensitivity.
 - S4: Pipeline code and reproducibility documentation.
@@ -318,9 +307,10 @@ EII estimates were highly robust to grid placement: across 25 systematic displac
 - Killick, R., Fearnhead, P., & Eckley, I.A. (2012). Optimal detection of changepoints with a linear computational cost. *Journal of the American Statistical Association*, 107(500), 1590–1598.
 - Levy, E.B., & Madden, E.A. (1933). The point method of pasture analysis. *New Zealand Journal of Agriculture*, 46(5), 267–279.
 - MapBiomas. (2024). Collection [X] of the Annual Land Use and Land Cover Maps of Brazil. *mapbiomas.org*.
-- McGarigal, K., et al. (2012). *FRAGSTATS v4: Spatial Pattern Analysis Program for Categorical and Continuous Maps*. University of Massachusetts.
+- McGarigal, K., & Marks, B.J. (1995). *FRAGSTATS: Spatial Pattern Analysis Program for Quantifying Landscape Structure*. USDA Forest Service.
 - Openshaw, S. (1984). *The Modifiable Areal Unit Problem*. Geo Books, Norwich.
 
 ---
+
 
 *Document maintained as part of the EII project. Update after each analytical phase is completed.*
