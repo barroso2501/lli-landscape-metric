@@ -352,10 +352,47 @@ Both analyses (3.11.1 and 3.11.2) use exclusively the six segment values $w_{ij}
 - Scale: HEX-10 / HEX-20 / HEX-40 — negligible effect on aggregated distributions.
 - Jitter: mean EII range < 0.005 across 25 realizations; CV < 0.003.
 
-### 4.5 Change point detection — EII vs. Area structural breaks (RQ2)
-- **Status: pending** — analysis planned, not yet executed (roadmap step 3.5).
-- Expected outputs: distribution of structural break years for EII and Area across cells; frequency distribution of temporal lag $\Delta_i = t^*_w - t^*_A$; spatial map of $\Delta_i$; proportion of cells where EII break precedes Area break.
-- Placeholder for results once PELT analysis is complete.
+### 4.5 Change point detection — EII structural breaks (RQ2)
+
+**Algorithm and parameterization:**
+PELT applied to EII annual series only (Paper 1 scope). Two modes run in parallel:
+- *Mode A:* Binseg with n_bkps=1 — identifies the single dominant structural break per cell. Used for spatial mapping and temporal characterization of the primary rupture event.
+- *Mode B:* Pelt with pen=3.0 — detects multiple breaks automatically. Penalty selected empirically from sensitivity analysis on a 500-cell subsample: pen=1.5 over-segments (45% of cells with 3+ breaks); pen=6.0 artificially converges toward Mode A (75% with 1 break); pen=3.0 produces a naturally balanced distribution (14% with 0 breaks, 34% with 1, 50% with 2, 2% with 3+), appropriately separating structural breaks from noise in EII series with variance range 0.001–0.04.
+
+**Study domain context:**
+The 1,500 × 1,500 km rectangular domain encompasses approximately 50% Cerrado and 50% Amazon (specifically the arc of deforestation), with marginal areas of Pantanal and Caatinga. The landscape dynamics observed therefore reflect both Cerrado agricultural frontier expansion and Amazon deforestation, with documented policy interventions (PPCDAM, launched 2004; Soy Moratorium, 2006) operating primarily on the Amazon portion of the domain.
+
+**Mode A results — primary structural break:**
+- Valid cells: 11,500 (all cells — no NaN in dataset)
+- Changepoint year range: 1990–2020; median: 2000; mean: 2003
+- ΔEII (after − before): mean = −0.141; cells with decline: ~88%
+- Distribution by period:
+
+| Period | Cells | % | ΔEII mean | % negative |
+|---|---|---|---|---|
+| 1990–1994 | 222 | 1.9% | — | — |
+| 1995–1999 | 1,992 | 17.3% | −0.171 | 89% |
+| 2000–2004 | 3,660 | 31.8% | −0.177 | 88% |
+| 2005–2009 | 2,551 | 22.2% | −0.174 | 94% |
+| 2010–2014 | 2,558 | 22.2% | −0.059 | 52% |
+| 2015–2019 | 458 | 4.0% | −0.060 | 83% |
+| 2020–2023 | 78 | 0.7% | −0.055 | 90% |
+
+**Mode B results — multiple break structure:**
+- 0 breaks: ~14% of cells (stable connectivity throughout series — concentrated in protected areas and already-converted landscapes with no margin for further decline)
+- 1 break: ~34% of cells
+- 2 breaks: ~50% of cells (dominant pattern — consistent with two distinct pulses of landscape pressure)
+- 3+ breaks: ~2% of cells
+
+**Ecological interpretation:**
+
+*Temporal pattern:* The peak of structural breaks in EII falls between 1995 and 2009 (71% of all breaks), coinciding with the documented period of maximum deforestation rates in both the Cerrado and the Amazon arc of deforestation. The sharp attenuation in break intensity after 2010 — with ΔEII declining from −0.177 to −0.059 and the proportion of negative breaks falling from 88–94% to 52% in the 2010–2014 period — is consistent with the policy effects of the Amazon Deforestation Prevention Plan (PPCDAM, 2004) and the Soy Moratorium (2006), which substantially reduced deforestation rates in the Amazon portion of the domain. The 52% negative rate in 2010–2014 (vs. 88–94% before) represents the quantitative signature of this policy-driven transition.
+
+*Spatial pattern:* The ΔEII spatial map shows near-zero values in protected areas and indigenous territories (connectivity unchanged) and strongly negative values along documented deforestation frontiers. The small number of cells with positive ΔEII (EII increase after break) is concentrated in the Pantanal margin, where hydrological dynamics produced areas of vegetation gain as water bodies contracted and were recolonized by native vegetation — a distinct ecological process unrelated to agricultural conversion.
+
+*Two-pulse structure:* The dominance of 2-break cells in Mode B is ecologically interpretable as two successive pulses of landscape pressure: an earlier pulse (1995–2005, high-intensity conversion) and a later pulse (2005–2015, consolidation of agricultural frontier or new fronts in MATOPIBA), separated by a period of slower transformation following policy interventions.
+
+*EII as an independent detector:* These temporal and spatial patterns were detected exclusively from the EII time series, without auxiliary information on governance, policy, or land use regulation. The concordance with independently documented deforestation history constitutes an external ecological validation of the metric.
 
 ### 4.6 Segment decomposition — anisotropy and directional gradients (RQ1)
 - **Relationship to RQ1:** treated as an exploratory extension of RQ1. The segment decomposition characterizes the internal structure of the EII independently of the area metric — demonstrating additional informational dimensions of the EII beyond the aggregated scalar. It does not constitute a separate RQ but substantially deepens the answer to RQ1.
@@ -454,10 +491,10 @@ The segment-level EII (mean of six components) differs from the full-perimeter E
 
 ## Status at freeze
 
-**Frozen:** 2026-04-02 (updated 2026-04-03 — boundary year exclusion documented)
+**Frozen:** 2026-04-02 (updated 2026-04-03 — change point detection complete)
 **Effective analysis period:** 1986–2023 (38 years; 1985 and 2024 excluded per MapBiomas ATBD Section 3.4.3.3)
-**Analyses complete:** Phases 1 and 2 (MAUP sensitivity, annual time series, divergence analysis, Moran's I, segment decomposition).
-**Pending before submission:** Phase 3 step 3.5 (change point detection → Section 4.5); segment decomposition analysis results (→ Section 4.6); final figures (→ Sections 4.1–4.7); Methods writing.
+**Analyses complete:** Phases 1, 2, and 3 (MAUP sensitivity, annual time series, divergence analysis, Moran's I, segment decomposition, change point detection).
+**Pending before submission:** Spatial maps for 1986 and 2023 (segment decomposition); final publication-quality figures (Figs. 1–7); Methods section writing.
 **Open parameter:** divergence threshold (0.5 provisional; sensitivity reported in Supplementary S2).
 
 ---
