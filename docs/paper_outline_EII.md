@@ -360,18 +360,24 @@ Both analyses (3.11.1 and 3.11.2) use exclusively the six segment values $w_{ij}
 ### 4.6 Segment decomposition — anisotropy and directional gradients (RQ1)
 - **Relationship to RQ1:** treated as an exploratory extension of RQ1. The segment decomposition characterizes the internal structure of the EII independently of the area metric — demonstrating additional informational dimensions of the EII beyond the aggregated scalar. It does not constitute a separate RQ but substantially deepens the answer to RQ1.
 - **Threshold note:** the 0.5 threshold used throughout the state classification (Sections 4.1–4.2) is provisional. Sensitivity to this threshold will be reported in Supplementary S2.
+- **Note on anchor years:** spatial maps use 1985 and 2024 (full dataset range); temporal statistics use 1986–2023 (effective analysis period). Maps of 1985 and 2024 are interpretable but may contain residual classification noise due to truncated temporal filters (see Section 3.2).
 
 **4.6.1 — Connectivity anisotropy**
+
 - For each cell and year: $\text{Aniso}_i(t) = \text{SD}(w_{i1},...,w_{i6})$.
-- Spatial map of mean anisotropy per cell across the full series.
-- Annual mean anisotropy for the domain — temporal trend.
-- Expected result: cells at active landscape frontiers show persistently higher anisotropy than cells in stable landscapes.
+- *Observed result — temporal trend (1986–2023):* mean anisotropy increased monotonically from 0.086 (1986) to 0.143 (2023), a 66% increase. The P25 grew 13-fold (0.006 → 0.072), indicating that cells which were nearly isotropic in 1986 developed substantial directional asymmetry by 2023. The IQR widened throughout, reflecting increasing landscape heterogeneity in the connectivity structure.
+- *Observed result — spatial pattern (2024 map):* cells with low anisotropy (near zero) co-locate with protected areas and indigenous territories — where habitat is preserved on all sides of the cell and connectivity is isotropic. Cells with high anisotropy (SD > 0.25) concentrate at the boundaries of these protected areas — where one or more sides face a converted matrix while opposite sides remain connected. This spatial co-location with known conservation boundaries constitutes an independent ecological validation of the segment decomposition method: the metric identifies ecotones and transition zones without any auxiliary spatial information.
 
 **4.6.2 — Directional gradients**
-- Three gradient maps per year (N-S, NE-SW, NW-SE axes).
-- Vector field of dominant gradient direction per cell.
-- Temporal trend in gradient magnitude: cells where gradients intensify over time locate advancing transformation frontiers.
-- Expected result: directional gradients are spatially coherent and align with known deforestation vectors in the domain (e.g., south-to-north expansion in MATOPIBA).
+
+- Three gradient maps per year (E-W, NE-SW, NW-SE axes); dominant gradient direction per cell.
+- *Observed result — temporal evolution:* gradient magnitude increased substantially between 1985 and 2024 across all three axes. Scale of dominant gradients expanded from ±0.4 (1985) to ±0.6 (2024), reflecting intensification of directional asymmetry as landscape conversion advanced. In 1985, gradient patterns were sparse and dispersed — the landscape was relatively homogeneous. By 2005, spatially coherent clusters emerged with protected areas visible as low-gradient islands. By 2024, the spatial structure was consolidated with large contiguous blocks of directionally biased cells.
+- *Observed result — directional dominance:* the NE-SW axis (60°–240°) consistently shows the strongest gradients across years — coherent with the known northeast-to-southwest orientation of the agricultural expansion frontier in the MATOPIBA region. The E-W axis shows weaker and more fragmented patterns. This directional signature is detected exclusively from the six segment values, without any auxiliary information about deforestation vectors.
+- *Observed result — protected area signature:* large white blocks (near-zero gradients in all axes) in 2005 and 2024 maps correspond to protected areas and indigenous territories. Their boundaries are sharply delineated by the gradient maps — a second independent spatial validation of the segment decomposition.
+
+**Pipeline validation note:**
+
+The segment-level EII (mean of six components) differs from the full-perimeter EII (Phase 2) by a mean of 0.003 ± 0.005 across all cells and years. This systematic offset is explained by the double-counting of the six vertex pixels — one per hexagonal vertex — which are captured by both adjacent segments when geometries are computed separately. This is a known geometric property of the decomposition, documented here for reproducibility. The full-perimeter EII (Phase 2) is used as the primary aggregated metric throughout the paper; segment values are used exclusively for directional analyses (Sections 4.6.1 and 4.6.2).
 
 ### 4.7 Temporal interval sensitivity (RQ3)
 - Comparison of 5-year vs. 10-year snapshot matrices.
