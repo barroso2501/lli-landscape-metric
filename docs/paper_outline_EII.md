@@ -545,16 +545,75 @@ The segment-level EII (mean of six components) differs from the full-perimeter E
 
 ---
 
-## References (key entries — not exhaustive)
+## References — structured by function in the paper
 
-- Canfield, R.H. (1941). Application of the line intercept method in sampling range vegetation. *Journal of Forestry*, 39(4), 388–394.
-- Killick, R., Fearnhead, P., & Eckley, I.A. (2012). Optimal detection of changepoints with a linear computational cost. *Journal of the American Statistical Association*, 107(500), 1590–1598.
-- Levy, E.B., & Madden, E.A. (1933). The point method of pasture analysis. *New Zealand Journal of Agriculture*, 46(5), 267–279.
-- MapBiomas. (2026). *Algorithm Theoretical Basis Document (ATBD) — MapBiomas Collection 10.1, Version 1*. February 2026. mapbiomas.org.
-- MapBiomas. (2024). Collection 10.1 of the Annual Land Use and Land Cover Maps of Brazil. *mapbiomas.org*.
-- McGarigal, K., & Marks, B.J. (1995). *FRAGSTATS: Spatial Pattern Analysis Program for Quantifying Landscape Structure*. USDA Forest Service.
-- Openshaw, S. (1984). *The Modifiable Areal Unit Problem*. Geo Books, Norwich.
-- Souza Jr., C.M. et al. (2020). Reconstructing three decades of land use and land cover changes in Brazilian biomes with Landsat archive and Earth Engine. *Remote Sensing*, 12(17), 2735.
+### Block 1 — Conceptual foundation of EII (nuclear)
+
+**Line intercept sampling theory:**
+- Canfield, R.H. (1941). Application of the line intercept method in sampling range vegetation. *Journal of Forestry*, 39(4), 388–394. **[Sections 1.3, 1.4, 2.1, 3.4]** — historical anchor; the EII is a direct transposition of this method to landscape-scale raster analysis.
+- Levy, E.B., & Madden, E.A. (1933). The point method of pasture analysis. *New Zealand Journal of Agriculture*, 46(5), 267–279. **[Section 2.1]** — precursor to Canfield; establishes systematic transect sampling in vegetation ecology.
+
+**Hexagonal grid geometry:**
+- Birch, C.P.D., Oom, S.P., & Beecham, J.A. (2007). Rectangular and hexagonal grids used for observation, experiment and simulation in ecology. *Ecological Modelling*, 206(3–4), 347–359. https://doi.org/10.1016/j.ecolmodel.2007.03.041 **[Sections 1.4, 3.3, 5.3]** — best justification for hexagonal geometry as a methodological choice, not merely a visual preference; covers isotropy, boundary interactions, and connectivity advantages.
+
+**Composition vs. configuration in landscape ecology:**
+- McGarigal, K., & Marks, B.J. (1995). *FRAGSTATS: Spatial Pattern Analysis Program for Quantifying Landscape Structure*. USDA Forest Service. **[Sections 2.2, 5.5]** — foundational distinction between composition and configuration; positions Area as composition estimator and EII as configuration estimator at the interface level.
+- McGarigal, K., Tagil, S., & Cushman, S.A. (2009). Surface metrics: an alternative to patch metrics for the quantification of landscape structure. *Landscape Ecology*, 24(3), 433–450. https://doi.org/10.1007/s10980-009-9327-y **[Sections 1.3, 5.5]** — documents the tradition of moving beyond patch mosaic metrics; positions EII as a complementary approach within this broader methodological evolution.
+
+---
+
+### Block 2 — Connectivity metrics literature (positioning and contrast)
+
+- Kindlmann, P., & Burel, F. (2008). Connectivity measures: a review. *Landscape Ecology*, 23(8), 879–890. https://doi.org/10.1007/s10980-008-9245-4 **[Sections 1.3, 5.5]** — establishes that "connectivity" is a plural, metrically fragmented concept before the EII; helps position EII as a structural metric distinct from functional connectivity approaches.
+- Tischendorf, L., & Fahrig, L. (2000). On the usage and measurement of landscape connectivity. *Oikos*, 90(1), 7–19. **[Sections 1.3, 2.2, 5.4]** — key reference for separating structural from functional connectivity; prevents overclaiming of EII and anchors it to the structural domain.
+- Keeley, A.T.H., Beier, P., & Jenness, J.S. (2021). Connectivity metrics for conservation planning and monitoring. *Biological Conservation*, 255, 109008. https://doi.org/10.1016/j.biocon.2021.109008 **[Sections 1.3, 5.4, 5.5]** — comprehensive review of 35 connectivity metrics; positions EII as a low-cost structural monitoring tool among a diverse methodological landscape.
+- Laliberté, J., & St-Laurent, M.-H. (2020). Validation of functional connectivity modeling: The Achilles' heel of landscape connectivity mapping. *Landscape and Urban Planning*, 202, 103878. https://doi.org/10.1016/j.landurbplan.2020.103878 **[Section 5.4]** — supports the caveat that EII measures interface connectivity, not functional connectivity validated by movement data.
+
+**Graph-based approaches (contrast and future work):**
+- Savary, P. et al. (2024). Multiple habitat graphs: how connectivity brings forth landscape ecological processes. *Landscape Ecology*, 39, 168. https://doi.org/10.1007/s10980-024-01947-4 **[Section 5.6]** — bridge to Paper 2: EII segment weights (w_ij) can serve directly as edge weights in a spatial graph of the kind developed here.
+- Prima, M.-C. et al. (2024). A comprehensive framework to assess multi-species landscape connectivity. *Methods in Ecology and Evolution*, 15, 2385–2399. https://doi.org/10.1111/2041-210X.14444 **[Section 5.4]** — illustrates the level of parameterization required for multi-species functional connectivity; clarifies that EII occupies a distinct, less demanding methodological niche.
+
+---
+
+### Block 3 — MAUP and sampling design
+
+- Jelinski, D.E., & Wu, J. (1996). The modifiable areal unit problem and implications for landscape ecology. *Landscape Ecology*, 11, 129–140. https://doi.org/10.1007/BF02447512 **[Sections 2.3, 3.7, 5.3]** — direct reference for MAUP in landscape ecology; much more targeted than Openshaw (1984) alone.
+- Openshaw, S. (1984). *The Modifiable Areal Unit Problem*. Geo Books, Norwich. **[Section 2.3]** — classical formulation of MAUP; retain as foundational citation alongside Jelinski & Wu.
+
+---
+
+### Block 4 — Ecological value of boundaries and edges
+
+- Prevedello, J.A. et al. (2013). Rethinking edge effects: the unaccounted role of geometric constraints. *Ecography*, 36(3), 287–299. https://doi.org/10.1111/j.1600-0587.2012.07820.x **[Sections 3.4, 5.1]** — demonstrates that boundary geometry has measurable ecological consequences; supports the argument that the cell perimeter contains ecologically informative signal, not merely geometric artifact.
+- Dangerfield, J.M. et al. (2003). Patterns of invertebrate biodiversity across a natural edge. *Austral Ecology*, 28(3), 227–236. https://doi.org/10.1046/j.1442-9993.2003.01240.x **[Section 5.1]** — ecological justification that edges capture ecologically relevant transitions, not just geometric boundaries.
+- Labadessa, R. et al. (2017). Quantifying edge influence on plant community structure and composition in semi-natural dry grasslands. *Applied Vegetation Science*, 20(3), 415–424. https://doi.org/10.1111/avsc.12332 **[Section 5.1]** — shows that sampling design relative to boundaries changes ecological inference; supports the EII's boundary-referenced approach.
+
+---
+
+### Block 5 — Input data and study context
+
+- Souza Jr., C.M. et al. (2020). Reconstructing three decades of land use and land cover changes in Brazilian biomes with Landsat archive and Earth Engine. *Remote Sensing*, 12(17), 2735. https://doi.org/10.3390/rs12172735 **[Section 3.2]** — MapBiomas methodological reference.
+- MapBiomas. (2026). *Algorithm Theoretical Basis Document (ATBD) — MapBiomas Collection 10.1, Version 1*. February 2026. mapbiomas.org. **[Section 3.2]** — explicit citation for the 1986–2023 effective period restriction (Section 3.4.3.3).
+
+---
+
+### Block 6 — Statistical methods
+
+- Killick, R., Fearnhead, P., & Eckley, I.A. (2012). Optimal detection of changepoints with a linear computational cost. *Journal of the American Statistical Association*, 107(500), 1590–1598. **[Section 3.8]** — PELT algorithm reference.
+
+---
+
+### Block 7 — Closest precedent (marginal, use with caution)
+
+- Vanderley-Silva, I., & Valente, R.A. (2023). Functional connectivity supported by forest conservation in urban sprawl landscape in São Paulo, Brazil. *GeoJournal*, 88, 3011–3028. https://doi.org/10.1007/s10708-022-10789-z **[Section 1.3, one sentence only]** — the closest precedent using hexagonal grids in connectivity planning, but computes standard patch-based metrics within each cell rather than treating the cell boundary as a sampling transect. Cite only to mark the distinction, not as a central reference.
+
+---
+
+### Notes on references not carried forward
+
+- *Levy & Madden (1933)*: retained as historical context for line sampling theory alongside Canfield (1941).
+- *MapBiomas (2024) generic entry*: replaced by the specific ATBD citation (MapBiomas 2026) which is more precise for the methodological restriction cited.
+- *McGarigal & Marks (1995) FRAGSTATS*: retained and supplemented by McGarigal et al. (2009) surface metrics paper.
 
 ---
 
