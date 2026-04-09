@@ -1,5 +1,5 @@
-# Edge Interception Index (EII)
-### A systematic transect-based metric for landscape interface connectivity
+# Landscape Line Intercept (LLI)
+### A systematic transect-based metric for landscape interface continuity
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status: Phase 3 — Core Analyses](https://img.shields.io/badge/Status-Phase%203%20In%20Progress-orange)]()
@@ -8,7 +8,7 @@
 
 ## Overview
 
-The **Edge Interception Index (EII)** is a landscape connectivity metric that reinterprets
+The **Landscape Line Intercept (LLI)** is a landscape connectivity metric that reinterprets
 the borders of a regular hexagonal grid as a spatially exhaustive set of systematic
 transects — directly analogous to the line intercept method in vegetation ecology
 (Canfield 1941). The proportion of each cell perimeter that intersects natural habitat
