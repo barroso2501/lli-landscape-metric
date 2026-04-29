@@ -43,16 +43,16 @@ authors:
 #   orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
 #   affiliation: "Institution"
 
-version: "0.1.0-preprint"
+version: "0.1.1-preprint"
 date-released: "2026-04-11"
 
 license: MIT
 
 repository-code: "https://github.com/barroso2501/lli-landscape-metric"
 
-# Update with Zenodo DOI once deposited:
-# doi: "<ZENODO_DOI>"
-
+version: "1.0.1"
+doi: "10.5281/zenodo.19889631"
+date-released: "2026-04-29"
 keywords:
   - landscape connectivity
   - line intercept sampling
