@@ -1,11 +1,11 @@
 # Landscape Line Intercept (LLI)
 ### A systematic transect-based metric for landscape interface continuity
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Status: Phase 3 — Core Analyses](https://img.shields.io/badge/Status-Phase%203%20In%20Progress-orange)]()
-[![DOI](https://zenodo.org/badge/1196502549.svg)](https://doi.org/10.5281/zenodo.19889630)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19889631.svg)]
-(https://doi.org/10.5281/zenodo.19889631)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Phase%203%20In%20Progress-orange.svg)
+[![DOI (latest)](https://zenodo.org/badge/1196502549.svg)](https://doi.org/10.5281/zenodo.19889630)
+[![DOI (version)](https://zenodo.org/badge/DOI/10.5281/zenodo.19889631.svg)](https://doi.org/10.5281/zenodo.19889631)
+``
 ``
 
 ---
