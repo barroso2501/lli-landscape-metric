@@ -227,8 +227,9 @@ Section 3.2 of the companion manuscript for full details.
 
 ### Input (not included — available from MapBiomas)
 
-- Annual binary rasters: natural vegetation (1) vs. non-natural (0), 30 m resolution,
-  1985–2024
+- Annual binary rasters: natural vegetation (1) vs. non-natural (0), ~30 m resolution
+  (EPSG:4326, pixel 0.000269°; the grids are in ESRI:102033 and are reprojected to the
+  raster CRS during extraction), 1985–2024
 - Source: [MapBiomas Brazil](https://mapbiomas.org) — Collection 10.1
 - Hexagonal and square grid shapefiles generated in ArcGIS Pro (Generate Tessellation)
   in ESRI:102033; domain rectangle lower-left (200,000; 1,700,000) m,

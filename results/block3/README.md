@@ -110,9 +110,10 @@ not committed because of its size (16 MB).
   - `grad_NESW` (w4 − w1) is **NW − SE**
   - `grad_NWSE` (w3 − w6) is **SW − NE**
 - The outline's "NE–SW dominance coherent with MATOPIBA" refers to the NW–SE axis.
-- The compass sign depends on the row/column direction. Evidence: the high-row,
-  low-column quadrant was the most intact in 1985 (Area 0.98), consistent with the
-  Amazon lying in the north-west. The shapefile confirms it.
+- **Confirmed on the real shapefile** (`b3_raster_checks.py`, A7 section): all 11,500
+  rings are clockwise with 6 vertices; w1..w6 are traversed at 240°, 180°, 120°, 60°,
+  0°, 300° (as the notebook assumes) and face compass bearings 120°, 180°, 240°, 300°,
+  0°, 60°, i.e. SE, S, SW, NW, N, NE.
 
 **Segment cover vs the two cells it separates.**
 - Model: w_seg ≈ 0.52 × Area(own) + 0.52 × Area(across).
@@ -138,7 +139,13 @@ loss once own and neighbour Area are known.** This is one operationalisation of
 to other outcomes (e.g. movement, fire spread), but that is untested and needs
 external data.
 
-## 6. Raster checks to run locally (`b3_raster_checks.py`) — [needs check]
+## 6. Raster checks to run locally
+
+The MapBiomas rasters are in **EPSG:4326** (pixel 0.000269°, ≈ 30 m N–S and ≈ 28.6–29.9 m E–W
+across the domain); the grid is in ESRI:102033. Geometries are transformed vertex-only to
+the raster CRS, as in the pipeline. `b3_raster_checks.py` v2 is resumable and several
+times faster than v1.
+ (`b3_raster_checks.py`) — [needs check]
 
 Tested on a synthetic raster and grid. The pixel-count emulation reproduces
 `rasterstats.zonal_stats` exactly (max |diff| = 0.0000).
