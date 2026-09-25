@@ -1,73 +1,69 @@
 # ============================================================
-# EII PIPELINE — CONFIGURATION TEMPLATE
+# LLI PIPELINE — CONFIGURATION TEMPLATE
 # ============================================================
-# Instructions:
-#   1. Copy this file and rename it (e.g., config_local.py)
-#   2. Edit the paths below to match your local data structure
-#   3. In the notebook, import or paste your config values
-#      into the configuration cell (Section 1)
+# Reference values for the configuration cell (Section 1) of each notebook.
 #
-# Do NOT commit your personal config file to the repository
-# (it is already listed in .gitignore as config_local.py)
+# How to use:
+#   1. Copy this file to config/config_local.py (ignored by git).
+#   2. Edit the paths below to match your local data structure.
+#   3. Paste the values into the configuration cell of each notebook.
+#      The notebooks do not import this file automatically.
+#
+# Naming note: data files and columns still use the legacy prefix "eii_"
+# (Edge Interception Index, the metric's former name). "eii" == LLI.
 # ============================================================
 
-# Root folder containing binary .tif rasters and the grid shapefile
-DATA_FOLDER = r"path/to/your/raster/folder"
+# ---- Inputs -------------------------------------------------
 
-# Hexagonal grid shapefile (polygons — converted to perimeters internally)
-GRID_SHAPEFILE = r"path/to/your/grid.shp"
+# Folder with ALL annual binary rasters (.tif), named e.g. reclass_YYYY.tif.
+# Encoding: 1 = natural vegetation, 0 = non-natural, 255 = outside domain.
+RASTER_FOLDER = r"path/to/rasters_binarios"
 
-# Checkpoint folder (created automatically if it does not exist)
-CHECKPOINT_FOLDER = r"path/to/your/checkpoints"
+# Primary grid (HEX-20, 20,000 ha regular hexagons, ESRI:102033).
+GRID_SHAPEFILE = r"path/to/grids/hex_20000ha.shp"
 
-# Consolidated output CSV
-OUTPUT_CSV = r"path/to/your/output/eif_consolidated.csv"
+# Folder with the named sensitivity grids (HEX-10, HEX-20, HEX-40, SQ-20)
+# and folder with the 25 jitter realizations (Phase 1 / RQ3).
+GRID_FOLDER = r"path/to/grids"
+JITTER_FOLDER = r"path/to/jitter_grids"
 
-# Nodata fallback value (used when raster metadata does not define nodata)
-NODATA_FALLBACK = 255
+# ---- Outputs ------------------------------------------------
 
-# Pixel value representing natural vegetation in the binary rasters
+# Checkpoint folder: one CSV per raster; allows safe interruption/resumption.
+CHECKPOINT_FOLDER = r"path/to/phase2_annual/checkpoints"
+
+# Consolidated outputs of the annual pipeline (phase2_annual_pipeline).
+EII_CSV_OUT = r"path/to/phase2_annual/eii_HEX20_annual.csv"       # LLI matrix
+AREA_CSV_OUT = r"path/to/phase2_annual/area_HEX20_annual.csv"     # Area matrix
+PAIRED_CSV_OUT = r"path/to/phase2_annual/eii_area_HEX20_annual.csv"
+
+# ---- Raster encoding ----------------------------------------
+
+# Nodata is HARDCODED to 255 in the analysis notebooks. MapBiomas binary
+# rasters declare nodata=0 in their metadata, but 0 = non-natural cover,
+# a valid value that must stay in the denominator. Do not read nodata
+# from the raster metadata.
+NODATA = 255
+
+# Pixel value representing natural vegetation.
 VEGETATION_VALUE = 1
 
-# Scenario label mapping: fragment of filename (lowercase) → scenario label
-# First match wins; add or remove entries as needed
+# ---- Scenario labels ----------------------------------------
+
+# Lowercase filename fragment -> scenario label. First match wins,
+# so put more specific fragments first.
 SCENARIO_MAP = {
-    "obs":  "OBS",    # observed / baseline
-    "tnc1": "TNC1",
-    "tnc2": "TNC2",
-    "bau":  "BAU",
-    "gov":  "GOV",
+    "reclass": "OBS",   # observed MapBiomas series (reclass_YYYY.tif)
+    "obs":     "OBS",
+    "tnc1":    "TNC1",
+    "tnc2":    "TNC2",
+    "bau":     "BAU",
+    "gov":     "GOV",
 }
 
-# ---- Visualization settings (used in notebook Section 6) ----
-VIZ_SCENARIO = "OBS"
-VIZ_YEAR     = "2020"
-VIZ_CSV_IN   = r"path/to/your/visualization_input.csv"
-VIZ_OUT_DIR  = r"path/to/your/visualization_outputs"
-```
+# ---- Analysis period ----------------------------------------
 
-**Passo 5.** Na mensagem de commit escreva:
-```
-Add configuration template with documented parameters
-```
-
-**Passo 6.** Clique em **"Commit changes"**
-
----
-
-## Bloco 8 — Adicionar tópicos ao repositório
-
-Isso ajuda o repositório a ser encontrado por outros pesquisadores no GitHub. É rápido.
-
-**Passo 1.** Na página principal do repositório, clique no ícone de engrenagem ⚙️ ao lado de **"About"** (canto superior direito, acima dos arquivos)
-
-**Passo 2.** No campo **"Topics"**, adicione um por vez:
-```
-landscape-ecology
-cerrado
-mapbiomas
-remote-sensing
-habitat-connectivity
-python
-geopandas
-time-series
+# 1985 and 2024 are excluded from analyses because of truncated temporal
+# filters at the ends of the MapBiomas series.
+YEAR_START = 1986
+YEAR_END = 2023

@@ -1,0 +1,17 @@
+# Python >= 3.10
+# Minimum set of packages used across the notebooks.
+# Versions are NOT pinned: to make the environment reproducible, replace
+# this list with the output of `pip freeze` from the machine that produced
+# the published results.
+rasterstats
+rasterio
+geopandas
+shapely
+fiona
+pandas
+numpy
+scipy
+matplotlib
+libpysal
+esda
+ruptures

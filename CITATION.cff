@@ -1,15 +1,13 @@
 cff-version: 1.2.0
+message: "If you use this software or data, please cite it using the metadata below."
 
 # ─── CITATION.cff ───────────────────────────────────────────────────────────
 # Citation metadata for the Landscape Line Intercept (LLI) project.
 # Format: Citation File Format (CFF) v1.2.0 — https://citation-file-format.github.io
 #
-# BEFORE UPLOADING TO GITHUB:
-#   1. Replace <YOUR_ORCID> with your ORCID iD (e.g. 0000-0002-1234-5678)
-#      Register at https://orcid.org if you do not have one.
-#   2. Replace <YOUR_EMAIL> with your institutional email.
-#   3. Replace <ZENODO_DOI> once you deposit the dataset/code on Zenodo.
-#   4. Update version and date-released whenever a new version is tagged.
+# Maintenance: at each GitHub release, update `version` and `date-released`.
+# `doi` holds the Zenodo CONCEPT DOI, which always resolves to the latest
+# version; version-specific DOIs are listed on the Zenodo record.
 # ────────────────────────────────────────────────────────────────────────────
 
 title: "Landscape Line Intercept (LLI): a systematic transect-based metric
@@ -23,12 +21,14 @@ abstract: >
   scale raster analysis. Each cell boundary pixel that intersects natural
   habitat is a "hit"; the hit rate estimates the permeability of that cell
   interface to habitat continuity. Used alongside a conventional within-cell
-  area metric, the LLI adds an orthogonal configuration dimension — interface
-  connectivity — that area metrics alone cannot capture. The repository
+  area metric, the LLI adds a configuration dimension — interface
+  connectivity — to area-based composition metrics. The repository
   contains the extraction pipeline, sensitivity analyses, and change-point
   detection notebooks applied to 38 years of binary habitat maps (MapBiomas
-  Collection 10, 1986–2023) across a 1,500 × 1,500 km study domain in central
+  Collection 10.1, 1986–2023) across a 1,500 × 1,500 km study domain in central
   Brazil (Cerrado, Amazon arc of deforestation, and marginal Pantanal).
+
+type: software
 
 authors:
   - family-names: Barroso Ramos Neto
@@ -37,22 +37,21 @@ authors:
     email: mario.barroso@tnc.org
     affiliation: "The Nature Conservancy — Science Team, Brazil"
 
-# Add co-authors here if applicable:
-# - family-names: Surname
-#   given-names: Given
-#   orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
-#   affiliation: "Institution"
-
-version: "0.1.1-preprint"
-date-released: "2026-04-11"
-
 license: MIT
-
 repository-code: "https://github.com/barroso2501/lli-landscape-metric"
 
-version: "1.0.1"
-doi: "10.5281/zenodo.19889631"
-date-released: "2026-04-29"
+version: "1.0.2"
+date-released: "2026-09-25"
+doi: "10.5281/zenodo.19889630"
+
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.19889630"
+    description: "Concept DOI (all versions; resolves to the latest)"
+  - type: doi
+    value: "10.5281/zenodo.19889631"
+    description: "Version DOI for v1.0.1"
+
 keywords:
   - landscape connectivity
   - line intercept sampling
@@ -69,35 +68,33 @@ keywords:
   - compositional-configurational divergence
 
 # ─── Preferred citation ─────────────────────────────────────────────────────
-# Update to the published paper reference once accepted.
-# Until then, cite the preprint / repository directly (fields above).
+# Uncomment and complete once the companion paper is accepted.
 #
 # preferred-citation:
 #   type: article
 #   authors:
 #     - family-names: Barroso Ramos Neto
 #       given-names: Mario
-#       orcid: "https://orcid.org/<YOUR_ORCID>"
+#       orcid: "https://orcid.org/0000-0001-5890-0536"
 #       affiliation: "The Nature Conservancy — Science Team, Brazil"
-#   title: "The Landscape Line Intercept: a systematic transect-based metric
-#     for landscape interface connectivity and its application to four decades
-#     of habitat dynamics in central Brazil"
+#   title: "The Landscape Line Intercept: recovering interface connectivity
+#     from the discarded boundaries of regular landscape grids"
 #   journal: "Methods in Ecology and Evolution"
-#   year: 2026           # update on acceptance
-#   doi: "<JOURNAL_DOI>" # update on acceptance
+#   year: 2026
+#   doi: "<JOURNAL_DOI>"
 # ────────────────────────────────────────────────────────────────────────────
 
-# ─── Key references ─────────────────────────────────────────────────────────
 references:
   - type: article
     authors:
       - family-names: Canfield
         given-names: R. H.
-    title: "Application of the line intercept method in sampling range vegetation"
+    title: "Application of the line interception method in sampling range vegetation"
     journal: "Journal of Forestry"
     volume: 39
     issue: 4
-    pages: "388–394"
+    start: 388
+    end: 394
     year: 1941
 
   - type: article
@@ -111,7 +108,8 @@ references:
     journal: "Environmental and Ecological Statistics"
     volume: 18
     issue: 1
-    pages: "109–130"
+    start: 109
+    end: 130
     year: 2011
     doi: "10.1007/s10651-009-0123-2"
 
@@ -122,14 +120,18 @@ references:
     year: 2026
     url: "https://mapbiomas.org/en/methods"
 
-  - type: software
+  - type: article
     authors:
-      - family-names: Killick
-        given-names: R.
-      - family-names: Fearnhead
-        given-names: P.
-      - family-names: Eckley
-        given-names: I. A.
-    title: "ruptures: change point detection in Python"
-    url: "https://github.com/deepcharles/ruptures"
-# ────────────────────────────────────────────────────────────────────────────
+      - family-names: Truong
+        given-names: Charles
+      - family-names: Oudre
+        given-names: Laurent
+      - family-names: Vayatis
+        given-names: Nicolas
+    title: "Selective review of offline change point detection methods"
+    journal: "Signal Processing"
+    volume: 167
+    start: 107299
+    year: 2020
+    doi: "10.1016/j.sigpro.2019.107299"
+    notes: "Reference publication for the ruptures Python library"

@@ -146,24 +146,24 @@ Both years are retained in the dataset and their values are reported separately 
 - Grid extent: the 1,500 × 1,500 km rectangular domain. All cells fully contained within the domain — no boundary clipping applied.
 
 **Primary configuration — hexagonal grid, 20,000 ha:**
-- Cell area: 20,000 ha (200 km²); side length: ~15.2 km; diagonal: ~26.2 km; actual cells: 11,500.
+- Cell area: 20,000 ha (200 km²); side length: ~8.77 km; perimeter: ~52.6 km; long diagonal (vertex to vertex): ~17.5 km; flat-to-flat width: ~15.2 km; actual cells: 11,500.
 - Rationale for hexagonal geometry: six border segments at 0°, 60°, 120°, 180°, 240°, 300° provide near-isotropic directional sampling, compared to four segments at 0°, 90°, 180°, 270° for square grids.
-- Rationale for 20,000 ha as primary scale: (1) ecologically interpretable as the watershed / small-municipality scale; (2) perimeter length (~54 km) provides sufficient pixel contacts for estimator stability; (3) alignment with territorial planning scales commonly used in Brazilian conservation policy.
+- Rationale for 20,000 ha as primary scale: (1) ecologically interpretable as the watershed / small-municipality scale; (2) perimeter length (~52.6 km) provides sufficient pixel contacts for estimator stability; (3) alignment with territorial planning scales commonly used in Brazilian conservation policy.
 
 **Scale sensitivity configurations:**
 
-| Configuration | Cell area | Side length | Actual cells | Ecological scale |
-|---|---|---|---|---|
-| Fine | 10,000 ha | ~10.7 km | 22,842 | Property / forest fragment |
-| **Primary** | **20,000 ha** | **~15.2 km** | **11,500** | **Watershed / small municipality** |
-| Coarse | 40,000 ha | ~21.5 km | 5,822 | Regional mosaic / corridor |
+| Configuration | Cell area | Side length | Flat-to-flat width | Perimeter | Actual cells | Ecological scale |
+|---|---|---|---|---|---|---|
+| Fine | 10,000 ha | ~6.2 km | ~10.7 km | ~37.2 km | 22,842 | Property / forest fragment |
+| **Primary** | **20,000 ha** | **~8.8 km** | **~15.2 km** | **~52.6 km** | **11,500** | **Watershed / small municipality** |
+| Coarse | 40,000 ha | ~12.4 km | ~21.5 km | ~74.4 km | 5,822 | Regional mosaic / corridor |
 
-- Scale ratio: ×2 in side length, ×4 in area between consecutive levels.
+- Scale ratio: ×2 in area and ×√2 (≈1.41) in linear dimensions between consecutive levels.
 - Hexagonal grids do not nest perfectly across scales; scale comparisons are treated as independent configurations.
 
 **Shape sensitivity configuration — square grid:**
 - Cell area: 20,000 ha; side length: ~14.1 km; actual cells: 11,449.
-- Note: equal area implies unequal perimeter (P_square ≈ 56.6 km vs. P_hexagon ≈ 54.4 km); reported explicitly (see Section 3.7.1).
+- Note: equal area implies unequal perimeter (P_square ≈ 56.6 km vs. P_hexagon ≈ 52.6 km); reported explicitly (see Section 3.7.1).
 
 ### 3.4 LLI formalization
 
@@ -257,7 +257,7 @@ Comparison structured across three explicit dimensions:
 - *Result (preliminary): mean LLI differs by < 0.001 across scales in both 1985 and 2020; scale effect on aggregated distributions is negligible.*
 
 **3.7.3 Zoning effect: systematic grid displacement**
-- 25 realizations: 8 directions × 3 distances (1/6, 1/3, 1/2 of side length) + original.
+- 25 realizations: 8 directions × 3 distances (1/6, 1/3, 1/2 of the HEX-20 flat-to-flat width of 15,197 m, i.e. ≈2.5, 5.1 and 7.6 km) + original.
 - *Result (preliminary): mean LLI varies by < 0.005 across 25 realizations; CV across realizations < 0.003. LLI estimates are highly robust to grid placement.*
 
 ### 3.8 Change point detection

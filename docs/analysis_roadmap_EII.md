@@ -12,7 +12,7 @@
 |---|---|
 | Study domain | Rectangle 1,500 × 1,500 km, ESRI:102033 (Albers Equal Area Conic) |
 | Domain corners | SW (200,000; 1,700,000) m — NE (1,700,000; 3,200,000) m |
-| Primary grid | Hexagonal, 20,000 ha (~15.2 km side), 11,500 cells |
+| Primary grid | Hexagonal, 20,000 ha (~8.8 km side; ~52.6 km perimeter; ~15.2 km flat-to-flat), 11,500 cells |
 | Scale sensitivity | 10,000 ha (22,842 cells) / 20,000 ha / 40,000 ha (5,822 cells) |
 | Shape sensitivity | Square, 20,000 ha (11,449 cells) |
 | Border cells | None — all cells fully contained within rectangular domain |

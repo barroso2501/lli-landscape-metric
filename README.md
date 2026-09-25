@@ -40,8 +40,12 @@ non-natural land cover), 30 m resolution, 1985–2024 (annual). Effective analys
 period: **1986–2023** (38 years; boundary years excluded due to MapBiomas temporal
 filtering artefacts).
 
-**Primary grid:** Regular hexagonal, 20,000 ha (~15.2 km side length; ~54.4 km
-perimeter), 11,500 cells.
+**Primary grid:** Regular hexagonal, 20,000 ha (side ≈ 8.77 km; perimeter ≈ 52.6 km;
+flat-to-flat width ≈ 15.2 km), 11,500 cells.
+
+**Naming note:** the metric was originally called the *Edge Interception Index (EII)*.
+Data files, column names and notebook code still use the legacy prefix `eii_`;
+throughout this repository, `eii` = LLI.
 
 ---
 
@@ -124,28 +128,40 @@ landscapes where area metrics alone would misrepresent connectivity status.
 ```
 lli-landscape-metric/
 ├── notebooks/
-│   ├── continuidade_refatorado.ipynb           # LLI extraction pipeline (primary)
-│   ├── jitter_grid_generation.ipynb            # Generate 25 displacement grids (RQ3)
-│   ├── phase1_sensitivity_analysis_v2.ipynb    # MAUP sensitivity: shape, scale, zoning
-│   ├── phase2_annual_pipeline.ipynb            # Annual LLI + Area + δ time series
-│   └── phase3_analyses.ipynb                   # Correlation, matrices, change-point,
-│                                               # heterochrony, segment decomposition
+│   ├── phase2_annual_pipeline.ipynb            # PRIMARY extraction: annual LLI + Area,
+│   │                                           # landscape states, Moran's I, δ summaries
+│   ├── jitter_grid_generation.ipynb            # Generate 25 displaced HEX-20 grids (RQ3)
+│   ├── phase1_sensitivity_analysis_v21.ipynb   # MAUP sensitivity: shape, scale, zoning
+│   ├── phase3_closing_analyses.ipynb           # LLI × Area correlation, residuals, 5×5 matrices
+│   ├── phase3_changepoint_detection.ipynb      # Cell-level change points (heterochrony)
+│   ├── phase3_segment_decomposition.ipynb      # Per-segment LLI, anisotropy, gradients
+│   └── continuidade_refatorado.ipynb           # LEGACY extraction notebook (scenarios);
+│                                               # not used for the published results
 ├── data/
-│   ├── lli_HEX20_annual.csv                    # LLI — 11,500 cells × 40 years
-│   ├── area_HEX20_annual.csv                   # Area — 11,500 cells × 40 years
-│   ├── annual_states.csv                       # Landscape state frequencies 1986–2023
-│   ├── delta_annual_summary.csv                # δ = LLI − Area distribution by year
-│   ├── moran_annual.csv                        # Moran's I for divergent states by year
-│   └── indices_bordas_EIF_consolidado.csv      # Legacy OBS baseline dataset
+│   ├── eii_HEX20_annual.csv                    # LLI — 11,500 cells × 40 years (1985–2024)
+│   ├── area_HEX20_annual.csv                   # Area — 11,500 cells × 40 years (1985–2024)
+│   ├── eii_area_HEX20_annual.csv               # LLI and Area matrices side by side
+│   ├── annual_states.csv                       # Landscape state frequencies per year
+│   ├── delta_annual_summary.csv                # δ = LLI − Area distribution per year
+│   ├── moran_annual.csv                        # Moran's I for divergent states per year
+│   ├── phase1_summary.csv                      # MAUP sensitivity summary (Phase 1)
+│   └── indices_bordas_EIF_consolidado.csv      # Legacy OBS baseline (different grid,
+│                                               # 5-year steps 1985–2020)
 ├── docs/
 │   ├── paper_outline_LLI.md                    # Full paper outline (revision 14)
-│   └── analysis_roadmap_LLI.md                 # Analysis plan with status tracking
+│   └── analysis_roadmap_EII.md                 # Analysis plan with status tracking
 ├── config/
-│   └── config_template.py                      # Configuration template (edit paths here)
+│   └── config_template.py                      # Reference configuration values
+├── requirements.txt
+├── CITATION.cff
+├── CHANGELOG.md
 ├── .gitignore
 ├── LICENSE
 └── README.md
 ```
+
+*Not yet in the repository:* the domain-level Pettitt change-point analysis and the
+figure scripts cited in the manuscript.
 
 ---
 
@@ -153,45 +169,37 @@ lli-landscape-metric/
 
 ### Requirements
 
-```
-Python >= 3.10
-rasterstats
-geopandas
-rasterio
-pandas
-numpy
-matplotlib
-libpysal
-esda
-ruptures
-```
-
-Install all dependencies:
+Python >= 3.10. Install all dependencies with:
 
 ```bash
-pip install rasterstats geopandas rasterio pandas numpy matplotlib libpysal esda ruptures
+pip install -r requirements.txt
 ```
+
+Package versions are not pinned yet (see `requirements.txt`).
 
 ### Critical note on nodata encoding
 
 MapBiomas binary rasters declare `nodata=0` in file metadata, but `0` encodes
 non-natural vegetation — a valid value that **must** be counted in the denominator.
-True outside-domain pixels are encoded as `255`. All notebooks use `nodata=255`
-hardcoded. Do not override this without verifying the raster encoding. See Methods
+True outside-domain pixels are encoded as `255`. All analysis notebooks (phase1–phase3)
+use `nodata=255` hardcoded. Do not override this without verifying the raster encoding.
+**Exception:** the legacy `continuidade_refatorado.ipynb` reads nodata from the raster
+metadata and must not be used on MapBiomas rasters without changing this. See Methods
 Section 3.2 of the companion manuscript for full details.
 
 ### Running the pipeline
 
 1. Clone this repository
-2. Copy `config/config_template.py` to your working directory and edit paths
+2. Copy `config/config_template.py` to `config/config_local.py` (git-ignored) and edit paths
 3. Open notebooks in order:
-   - `continuidade_refatorado` → extracts LLI and Area for all annual rasters
    - `jitter_grid_generation` → generates 25 displacement realisations for RQ3
-   - `phase1_sensitivity_analysis_v2` → MAUP sensitivity (shape, scale, zoning)
-   - `phase2_annual_pipeline` → annual time series, δ, and state classification
-   - `phase3_analyses` → correlation, 5×5 matrices, change-point detection,
-     spatial heterochrony, segment decomposition
-4. Edit **only the configuration cell** (Section 1) in each notebook
+   - `phase1_sensitivity_analysis_v21` → MAUP sensitivity (shape, scale, zoning)
+   - `phase2_annual_pipeline` → extracts annual LLI and Area; states, Moran's I, δ
+   - `phase3_closing_analyses` → correlation, residuals, 5×5 matrices
+   - `phase3_changepoint_detection` → cell-level change points (heterochrony)
+   - `phase3_segment_decomposition` → per-segment LLI and directional metrics
+4. Edit **only the configuration cell** (Section 1) in each notebook, using the
+   values from your `config_local.py`
 5. Run all cells sequentially — the checkpoint system allows safe interruption
    and resumption without reprocessing completed years
 
@@ -212,11 +220,17 @@ Section 3.2 of the companion manuscript for full details.
 
 | File | Description | Dimensions |
 |---|---|---|
-| `lli_HEX20_annual.csv` | LLI per cell per year | 11,500 × 41 |
-| `area_HEX20_annual.csv` | Area per cell per year | 11,500 × 41 |
-| `annual_states.csv` | Landscape state frequencies | 38 years × 10 cols |
-| `delta_annual_summary.csv` | δ distribution statistics | 38 years × 11 cols |
-| `moran_annual.csv` | Spatial autocorrelation of divergence | 38 years × 5 cols |
+| `eii_HEX20_annual.csv` | LLI per cell per year (ID + 1985–2024) | 11,500 × 41 |
+| `area_HEX20_annual.csv` | Area per cell per year (ID + 1985–2024) | 11,500 × 41 |
+| `eii_area_HEX20_annual.csv` | Both matrices side by side | 11,500 × 81 |
+| `annual_states.csv` | Landscape state frequencies | 40 years × 11 cols |
+| `delta_annual_summary.csv` | δ distribution statistics | 40 years × 11 cols |
+| `moran_annual.csv` | Spatial autocorrelation of divergence | 40 years × 5 cols |
+| `phase1_summary.csv` | MAUP sensitivity summary | 58 rows × 9 cols |
+
+Output tables cover 1985–2024; analyses use the effective period 1986–2023.
+In `annual_states.csv`, the legacy column names `coupled_*` / `decoupled_pct`
+correspond to *Concordant* / *divergent* states.
 
 ---
 
@@ -238,10 +252,11 @@ supplementary materials.
 
 ## Citation
 
-If you use this code or data, please cite the versioned software archive:
+If you use this code or data, please cite the software archive (the concept DOI
+always resolves to the latest version; cite the version you used):
 
-> Barroso Ramos Neto, M. (2026). *lli-landscape-metric: Landscape Line Intercept (LLI)*
-> (v1.0.1). Zenodo. https://doi.org/10.5281/zenodo.19889631
+> Barroso Ramos Neto, M. (2026). *lli-landscape-metric: Landscape Line Intercept (LLI)*.
+> Zenodo. https://doi.org/10.5281/zenodo.19889630
 
 For the methodological framework, please also cite the companion manuscript
 (in preparation):
