@@ -2,7 +2,7 @@
 ### A systematic transect-based metric for landscape interface connectivity
 
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Status](https://img.shields.io/badge/Status-Phase%203%20Complete-green.svg)
+![Status](https://img.shields.io/badge/Status-Under%20revision-orange.svg)
 [![DOI (concept)](https://zenodo.org/badge/1196502549.svg)](https://doi.org/10.5281/zenodo.19889630)
 [![DOI (v1.0.1)](https://zenodo.org/badge/DOI/10.5281/zenodo.19889631.svg)](https://doi.org/10.5281/zenodo.19889631)
 
@@ -91,35 +91,46 @@ landscapes where area metrics alone would misrepresent connectivity status.
 
 ## Key results (effective analysis period 1986–2023)
 
-**RQ1 — Informational complementarity:**
-- Pearson r between LLI and Area: 0.960–0.966 across all 38 years (stable but not
-  redundant: ~7% unexplained variance corresponds to ~800 cells/year where LLI
-  carries independent structural information)
-- Proportion of cells where |residual| > 0.10 (LLI substantially exceeds area
-  prediction): doubled from **8.0% (1986) to 16.4% (2023)**
-- Divergent cells (Type I + II combined): tripled from **2.8% (1986) to 8.2% (2023)**
-- Spatial clustering of divergence: Moran's I = 0.094–0.136, significant in all
-  38 years (p < 0.01, 99 permutations)
+> **Status (2026-09-25):** results are under revision following an internal audit
+> (see `CHANGELOG.md`). Numbers below are reproducible from the files in `data/`
+> unless marked otherwise; items marked *under revision* should not be cited.
+
+**RQ1 — LLI vs. Area:**
+- Pearson r between LLI and Area: 0.960–0.966 across all 38 years; Area explains
+  92–93% of the cross-cell variance in LLI (1 − R² = 6.7–7.8%)
+- Domain-mean LLI equals domain-mean Area to within 0.002 in every year, as expected
+  for a line-intercept estimator of cover (Delesse–Rosiwal principle)
+- Cells with |OLS residual of LLI on Area| > 0.10: **8.0% (1986) → 16.4% (2023)**;
+  in 2023, 7.7% lie above +0.10 and 8.8% below −0.10
+- Divergent cells (Type I + II, τ = 0.5): **2.8% (1986) → 8.2% (2023)**. Divergence
+  concentrates in cells with intermediate Area (0.3–0.6); most of the increase
+  (~75–80%) is attributable to the shift of cells toward intermediate cover rather
+  than to higher divergence rates at a given Area
+- Spatial clustering of divergent states: Moran's I = 0.094–0.136, p ≤ 0.01 in all
+  38 years (99 permutations; 0.01 is the smallest attainable pseudo p-value)
 
 **RQ2 — Spatiotemporal divergence dynamics:**
 - Concordant-High cells: 90.8% → 58.4% (−32.4 pp over 38 years)
 - Negative tail of δ widened: P10 from −0.060 (1986) to −0.094 (2023); proportion
   of cells with δ < 0 increased from 41.7% to 47.0%
-- Domain-level Pettitt test (series of first differences): single significant
-  transition in rate of LLI decline detected in **2006** (K = 346, p < 0.001),
-  coinciding with PPCDAm consolidation and Soy Moratorium — detected without
-  auxiliary governance information
-- Cell-level heterochrony (Mode A): primary break years span 1990–2020
-  (median: 2000; SD: 6.0 years), documenting the progressive advance of the
-  deforestation frontier across the domain
+- Domain-level Pettitt test on first differences of mean LLI: break in the rate of
+  decline after **2006** (K = 306). The Area series yields the same break year and K.
+  The nominal p-value assumes independence; the differenced series is strongly
+  autocorrelated (lag-1 r = 0.81), so significance is *under revision*. Code for
+  this analysis is not yet in the repository
+- Cell-level change points (heterochrony): *under revision*. The published run used
+  the `ruptures` default `jump=5`, which restricts candidate break years to
+  1990, 1995, …, 2020
 
-**RQ3 — MAUP sensitivity:**
-- Zoning effect: mean domain-level LLI varies < 0.005 across 25 systematic grid
-  realisations; **CV < 0.003**
-- Scale effect: mean LLI difference < 0.001 across HEX-10, HEX-20, HEX-40
-  (10,000–40,000 ha range)
-- Shape effect: maximum cell-wise difference < 0.008 between HEX-20 and SQ-20
-  across all quadrants of the 5×5 Area × LLI frequency matrix
+**RQ3 — MAUP sensitivity (domain-level summaries, 1985 and 2020):**
+- Zoning effect: domain-mean LLI ranges < 0.005 across 25 displaced grid
+  realisations (CV ≤ 0.002)
+- Scale effect: domain-mean LLI differs by ≤ 0.004 across HEX-10, HEX-20 and
+  HEX-40 (≤ 0.001 in 1985)
+- Shape effect: maximum difference in 5×5 Area × LLI matrix frequencies between
+  HEX-20 and SQ-20 < 0.008 (not reproducible from committed files)
+- Domain-mean stability is expected for an unbiased line-intercept estimator;
+  cell-level stability of the landscape-state classification has not yet been assessed
 
 ---
 
@@ -240,13 +251,14 @@ correspond to *Concordant* / *divergent* states.
 |---|---|---|
 | **Phase 1** | Grid configuration sensitivity (MAUP — RQ3) | ✅ Complete |
 | **Phase 2** | Full annual time series 1985–2024 | ✅ Complete |
-| **Phase 3** | Core analyses: correlation, matrices, change-point, heterochrony, segment decomposition | ✅ Complete |
+| **Phase 3** | Core analyses: correlation, matrices, change-point, heterochrony, segment decomposition | 🔄 Under revision (audit 2026-09-25) |
 | **Phase 4** | Final figures, manuscript submission, reproducibility package | 🔄 In progress |
 
 **Manuscript status:** Near-complete draft under preparation for submission to
 *Methods in Ecology and Evolution*. All sections drafted; pending final figure
 revisions (LLI relabelling, north arrow/scale bar on maps), back matter, and
-supplementary materials.
+supplementary materials. Several Phase 3 results are being revised following an
+internal audit (2026-09-25); see "Key results" above.
 
 ---
 

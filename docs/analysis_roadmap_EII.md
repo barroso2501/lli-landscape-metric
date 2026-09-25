@@ -77,7 +77,7 @@ Complexity: 🟢 Low / 🟡 Medium / 🔴 High.
 | % cells with δ < 0 | 41.8% | 46.9% |
 | % cells with |δ| < 0.05 | 75.8% | 58.5% |
 
-**Moran's I (divergent states):** Significant in all 40 years (p < 0.01); I = 0.094–0.136; z-scores 16–26. Divergent cells are spatially clustered throughout the series.
+**Moran's I (divergent states):** p ≤ 0.01 in all 40 years (99 permutations; 0.01 is the minimum attainable pseudo p-value); I = 0.094–0.136; z-scores 16–26. Divergent cells are spatially clustered throughout the series.
 
 ---
 
