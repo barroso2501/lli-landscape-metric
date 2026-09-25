@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased — Block 3 re-analyses (audit 2026-09-25)
+
+- **New `analysis/` scripts** (run from repo root on committed data) with outputs in
+  `results/block3/`; see `results/block3/README.md` for results and confidence labels:
+  corrected cell-level change points with LLI-vs-Area timing (`b3_changepoints.py`),
+  divergence conditional on Area (`b3_divergence_conditional.py`), cell-neighbourhood
+  contrast and 999-permutation Moran's I (`b3_neighbourhood.py`), robust domain-level
+  break (`b3_domain_break.py`), and raster-based checks to run locally
+  (`b3_raster_checks.py`: segment orientation, pixel vs length weighting, line-sampling
+  null model, valid-data coverage).
+- **notebooks/phase3_changepoint_detection.ipynb:** `jump=1`, `min_size=2` explicit
+  (published run used the ruptures default `jump=5`); legend label and break-year
+  convention corrected. Published change-point outputs must be regenerated.
+
 ## Unreleased — claims corrections (audit 2026-09-25, Block 2)
 
 No data or analysis code changed. Text corrections only; items that need

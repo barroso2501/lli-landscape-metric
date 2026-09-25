@@ -1,0 +1,14 @@
+absdelta_gt_0.10: 1986 8.4% -> 2023 17.6% (change +9.2 pp) = composition +7.1 pp + within-bin rate +2.1 pp (composition fraction 77%)
+typeI_II: 1986 2.8% -> 2023 8.1% (change +5.4 pp) = composition +5.3 pp + within-bin rate +0.1 pp (composition fraction 98%)
+
+Rate of |delta| > 0.10 by Area bin, 1986 vs 2023 (share of cells in bin):
+  Area 0.0-0.1:  15.4% (n=   13) ->   9.4% (n=  139);  mean delta +0.032 -> +0.023
+  Area 0.1-0.2:  12.8% (n=   78) ->  13.2% (n=  622);  mean delta +0.026 -> +0.027
+  Area 0.2-0.3:  15.3% (n=  170) ->  20.9% (n= 1066);  mean delta +0.031 -> +0.028
+  Area 0.3-0.4:  27.6% (n=  283) ->  23.7% (n= 1284);  mean delta +0.037 -> +0.015
+  Area 0.4-0.5:  22.6% (n=  385) ->  26.0% (n= 1186);  mean delta +0.029 -> +0.008
+  Area 0.5-0.6:  26.2% (n=  485) ->  26.3% (n= 1257);  mean delta +0.021 -> -0.004
+  Area 0.6-0.7:  22.5% (n=  672) ->  25.8% (n= 1077);  mean delta +0.014 -> -0.011
+  Area 0.7-0.8:  20.9% (n=  997) ->  24.9% (n=  962);  mean delta +0.003 -> -0.026
+  Area 0.8-0.9:  11.1% (n= 1573) ->  15.9% (n=  917);  mean delta -0.006 -> -0.028
+  Area 0.9-1.0:   1.5% (n= 6844) ->   3.2% (n= 2990);  mean delta -0.006 -> -0.010

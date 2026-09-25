@@ -1,0 +1,15 @@
+LLI:
+  Pettitt on first differences (as published): break after 2006, K=306, nominal p=4.1e-05 (assumes independence)
+  Kink model on levels: kink after 2006; slope -8.22 -> -3.93 (x10^-3 per year); sup-F=812.4
+  sup-F bootstrap p: conservative (AR1 phi=0.98 from straight-line residuals) = 0.000; liberal (phi=0.77 from kink residuals) = 0.0005
+  Kink year, 90% block-bootstrap interval: 2005-2007 (median 2006)
+Area:
+  Pettitt on first differences (as published): break after 2006, K=306, nominal p=4.1e-05 (assumes independence)
+  Kink model on levels: kink after 2006; slope -8.17 -> -3.90 (x10^-3 per year); sup-F=749.8
+  sup-F bootstrap p: conservative (AR1 phi=0.98 from straight-line residuals) = 0.001; liberal (phi=0.78 from kink residuals) = 0.0005
+  Kink year, 90% block-bootstrap interval: 2005-2007 (median 2006)
+delta (LLI-Area):
+  Pettitt on first differences (as published): break after 1992, K=106, nominal p=5.5e-01 (assumes independence)
+  Kink model on levels: kink after 1992; slope -0.14 -> -0.04 (x10^-3 per year); sup-F=27.1
+  sup-F bootstrap p: conservative (AR1 phi=0.75 from straight-line residuals) = 0.168; liberal (phi=0.63 from kink residuals) = 0.0710
+  Kink year, 90% block-bootstrap interval: 1992-2000 (median 1992)

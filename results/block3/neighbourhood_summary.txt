@@ -1,0 +1,8 @@
+Adjacency source: INFERRED from ID order (verify with shapefile); mean neighbours per cell 5.93
+1986: R² LLI~Area 0.922 -> +nbr Area 0.942 (coef own 0.627, nbr 0.386); corr(delta, nbr-own contrast) 0.532 -> explains 28% of delta variance
+      Moran (999 perm): divergent state I=0.114 p=0.001; delta I=0.037 p=0.001; delta net of contrast I=0.168 p=0.001
+2004: R² LLI~Area 0.933 -> +nbr Area 0.949 (coef own 0.647, nbr 0.362); corr(delta, nbr-own contrast) 0.508 -> explains 26% of delta variance
+      Moran (999 perm): divergent state I=0.112 p=0.001; delta I=0.060 p=0.001; delta net of contrast I=0.176 p=0.001
+2023: R² LLI~Area 0.928 -> +nbr Area 0.945 (coef own 0.645, nbr 0.370); corr(delta, nbr-own contrast) 0.514 -> explains 26% of delta variance
+      Moran (999 perm): divergent state I=0.102 p=0.001; delta I=0.040 p=0.001; delta net of contrast I=0.154 p=0.001
+Range over 1986-2023: share of delta variance explained by contrast 25%-29%; unexplained LLI variance falls from 7.1% (Area only) to 5.4% (Area + neighbours), mean over years

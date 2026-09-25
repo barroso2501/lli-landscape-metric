@@ -158,6 +158,13 @@ lli-landscape-metric/
 │   ├── phase1_summary.csv                      # MAUP sensitivity summary (Phase 1)
 │   └── indices_bordas_EIF_consolidado.csv      # Legacy OBS baseline (different grid,
 │                                               # 5-year steps 1985–2020)
+├── analysis/                                   # Audit re-analyses (Block 3); run from repo root
+│   ├── b3_changepoints.py                      # Cell-level change points (jump=1), LLI vs Area timing
+│   ├── b3_divergence_conditional.py            # Divergence conditional on Area
+│   ├── b3_neighbourhood.py                     # δ vs neighbourhood contrast; Moran's I (999 perm.)
+│   ├── b3_domain_break.py                      # Robust domain-level break test
+│   └── b3_raster_checks.py                     # Raster-based checks (run locally)
+├── results/block3/                             # Outputs of the scripts above + README
 ├── docs/
 │   ├── paper_outline_LLI.md                    # Full paper outline (revision 14)
 │   └── analysis_roadmap_EII.md                 # Analysis plan with status tracking

@@ -1,0 +1,28 @@
+CELL-LEVEL CHANGE POINTS — LLI, 1986-2023 (Binseg n_bkps=1, rbf, jump=1, min_size=2)
+All cells (n=11500): break years 1987-2021, median 2002, mean 2003.5, SD 6.6; mean delta -0.143; declining 81.0%
+  share of cells with |delta_lli| >= 0.02: 77.4%
+  share of cells with |delta_lli| >= 0.05: 68.2%
+  share of cells with |delta_lli| >= 0.1: 54.6%
+Material breaks only (|delta| >= 0.05, n=7841): median 2002, mean 2001.9, SD 5.4; declining 98.3%
+
+Breaks by period (all cells | material breaks):
+period          n      %   mean d  % neg        n   mean d  % neg
+1986-1989      38   0.3%   -0.017    71%       15   -0.032    73%
+1990-1994     645   5.6%   -0.094    86%      443   -0.132    94%
+1995-1999    3165  27.5%   -0.173    84%     2441   -0.223    98%
+2000-2004    3428  29.8%   -0.193    95%     2902   -0.225    99%
+2005-2009    1548  13.5%   -0.156    91%     1172   -0.202    99%
+2010-2014    2415  21.0%   -0.049    50%      757   -0.146    99%
+2015-2019     234   2.0%   -0.039    78%       93   -0.082    89%
+2020-2023      27   0.2%   -0.104    89%       18   -0.148   100%
+
+Mode B (PELT, rbf, jump=1) — number of breaks per cell, share of cells:
+  pen=1.5: 0: 11.3%, 1: 2.9%, 2: 26.2%, 3+: 59.6%
+  pen=3.0: 0: 11.7%, 1: 21.2%, 2: 57.6%, 3+: 9.5%
+  pen=6.0: 0: 18.5%, 1: 74.5%, 2: 7.0%
+
+LLI vs AREA break timing (Mode A):
+  identical break year, all cells: 33.7%
+  cells with material breaks in both series: n=7276
+  lag = t*_LLI - t*_Area: identical 31.0%; |lag| <= 1 yr 57.0%; LLI earlier 35.3%; LLI later 33.7%; median 0; mean -0.04
+  sign test (LLI earlier vs later, ties excluded): n=5020, p=0.105
