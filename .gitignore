@@ -205,3 +205,7 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+   # Local configuration (personal paths) — never commit
+   config/config_local.py
+   config_local.py
