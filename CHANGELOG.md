@@ -10,6 +10,8 @@
   break (`b3_domain_break.py`), and raster-based checks to run locally
   (`b3_raster_checks.py`: segment orientation, pixel vs length weighting, line-sampling
   null model, valid-data coverage).
+  Added `b3_segments_baseline.py`: segment orientation resolved from shared-edge matches
+  and predictive test of LLI/segments against an area-plus-neighbours baseline.
 - **notebooks/phase3_changepoint_detection.ipynb:** `jump=1`, `min_size=2` explicit
   (published run used the ruptures default `jump=5`); legend label and break-year
   convention corrected. Published change-point outputs must be regenerated.

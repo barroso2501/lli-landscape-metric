@@ -11,7 +11,8 @@ recomputed here from committed data; **[needs check]** = requires rasters or sha
 | `b3_divergence_conditional.py` | A2 | < 1 min | `divergence_*.csv`, `divergence_conditional.png`, `divergence_summary.txt` |
 | `b3_neighbourhood.py` | A1, A5, A6 | < 1 min | `neighbourhood_by_year.csv`, `neighbourhood_summary.txt` |
 | `b3_domain_break.py` | A4 (domain level) | < 1 min | `domain_break_summary.txt` |
-| `b3_raster_checks.py` | A1 (null model), A7, A8, A12 | 5–15 min per year, **local** | written to the configured folder |
+| `b3_segments_baseline.py` | A7, RQ1 decisive test | < 1 min | `segments_baseline_summary.txt` (needs local `seg_w1w6_annual.csv`) |
+| `b3_raster_checks.py` | A1 (null model), A8, A12 | 5–15 min per year, **local** | written to the configured folder |
 
 `notebooks/phase3_changepoint_detection.ipynb` now sets `jump=1` and `min_size=2` explicitly.
 
@@ -93,7 +94,51 @@ Symmetric Kitagawa decomposition of the 1986 → 2023 change:
   LLI reproduces, not evidence specific to LLI.
 - The δ series shows no robust break.
 
-## 5. Raster checks to run locally (`b3_raster_checks.py`) — [needs check]
+## 5. Segment orientation and the area-plus-neighbours baseline (`b3_segments_baseline.py`) — [verified]
+
+Input: `seg_w1w6_annual.csv` from the segment notebook, supplied by the author. It is
+not committed because of its size (16 MB).
+
+**A7 resolved from the data.**
+- Two adjacent cells share one segment, so their values are identical. Every segment
+  finds an exact partner (mean |diff| = 0.00000). This also confirms the inferred grid
+  layout.
+- Segments face (assuming +row = North, +col = East): **w1 = SE, w2 = S, w3 = SW,
+  w4 = NW, w5 = N, w6 = NE**.
+- The notebook's axes are therefore mislabelled:
+  - `grad_EW` (w5 − w2) is **N − S**
+  - `grad_NESW` (w4 − w1) is **NW − SE**
+  - `grad_NWSE` (w3 − w6) is **SW − NE**
+- The outline's "NE–SW dominance coherent with MATOPIBA" refers to the NW–SE axis.
+- The compass sign depends on the row/column direction. Evidence: the high-row,
+  low-column quadrant was the most intact in 1985 (Area 0.98), consistent with the
+  Amazon lying in the north-west. The shapefile confirms it.
+
+**Segment cover vs the two cells it separates.**
+- Model: w_seg ≈ 0.52 × Area(own) + 0.52 × Area(across).
+- R² rises from 0.66–0.69 (own cell only) to 0.72–0.75 (both cells).
+- The residual SD is 0.12–0.17. This is what the boundary line records beyond the two
+  cells' average cover: fine-scale arrangement plus line-sampling error.
+
+**Decisive predictive test.**
+- Target: future Area loss over 5 years (origins 1990–2015; 69,000 cell-periods;
+  spatial block cross-validation).
+- Baseline: own Area, mean and individual neighbour Areas, and past changes of own
+  and neighbour Area. The baseline is informative: neighbour Area information raises
+  R² from 0.223 (own cell only) to 0.259.
+
+| Learner | Baseline R² | + LLI | + 6 segments |
+|---|---|---|---|
+| Linear | 0.2587 | 0.2588 (Δ +0.0000) | 0.2587 (Δ −0.0000) |
+| Gradient boosting | 0.3272 | 0.3268 (Δ −0.0004) | 0.3278 (Δ +0.0006) |
+
+**Neither LLI nor the six segment values add any predictive skill for future habitat
+loss once own and neighbour Area are known.** This is one operationalisation of
+"information" (future land-cover change). LLI could still carry information relevant
+to other outcomes (e.g. movement, fire spread), but that is untested and needs
+external data.
+
+## 6. Raster checks to run locally (`b3_raster_checks.py`) — [needs check]
 
 Tested on a synthetic raster and grid. The pixel-count emulation reproduces
 `rasterstats.zonal_stats` exactly (max |diff| = 0.0000).

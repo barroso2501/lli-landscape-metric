@@ -1,0 +1,27 @@
+PART 1 — segment -> neighbour it faces (exact shared-edge match), 2023
+  column parity 0: w1 = w4 of neighbour at (row-1, col+1); mean |diff| 0.00000
+  column parity 0: w2 = w5 of neighbour at (row-1, col+0); mean |diff| 0.00000
+  column parity 0: w3 = w6 of neighbour at (row-1, col-1); mean |diff| 0.00000
+  column parity 0: w4 = w1 of neighbour at (row+0, col-1); mean |diff| 0.00000
+  column parity 0: w5 = w2 of neighbour at (row+1, col+0); mean |diff| 0.00000
+  column parity 0: w6 = w3 of neighbour at (row+0, col+1); mean |diff| 0.00000
+  column parity 1: w1 = w4 of neighbour at (row+0, col+1); mean |diff| 0.00000
+  column parity 1: w2 = w5 of neighbour at (row-1, col+0); mean |diff| 0.00000
+  column parity 1: w3 = w6 of neighbour at (row+0, col-1); mean |diff| 0.00000
+  column parity 1: w4 = w1 of neighbour at (row+1, col-1); mean |diff| 0.00000
+  column parity 1: w5 = w2 of neighbour at (row+1, col+0); mean |diff| 0.00000
+  column parity 1: w6 = w3 of neighbour at (row+1, col+1); mean |diff| 0.00000
+  Direction faced (assumes +row = North, +col = East): w1=SE, w2=S, w3=SW, w4=NW, w5=N, w6=NE
+  Notebook labels: grad_EW = w5 - w2, grad_NESW = w4 - w1, grad_NWSE = w3 - w6.
+  Actual axes: w5 - w2 = N - S; w4 - w1 = NW - SE; w3 - w6 = SW - NE.
+
+PART 2 — w_segment ~ Area(own) + Area(neighbour across the segment)
+  1986: own only R² 0.657 -> own + across R² 0.722; coefficients own 0.519, across 0.519; residual SD 0.119
+  2004: own only R² 0.691 -> own + across R² 0.751; coefficients own 0.517, across 0.517; residual SD 0.153
+  2023: own only R² 0.672 -> own + across R² 0.738; coefficients own 0.521, across 0.521; residual SD 0.167
+
+PART 3 — predicting Area loss over 5 years, origins 1990-2015 (pooled)
+  n = 69000 cell-periods; mean loss 0.031, SD 0.057
+  linear           : baseline (Area + neighbours) R² 0.2587 | +LLI 0.2588 (Δ +0.0000) | +6 segments 0.2587 (Δ -0.0000)
+  gradient boosting: baseline (Area + neighbours) R² 0.3272 | +LLI 0.3268 (Δ -0.0004) | +6 segments 0.3278 (Δ +0.0006)
+  reference (linear): own Area + own past change only R² 0.2230

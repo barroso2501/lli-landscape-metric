@@ -65,7 +65,7 @@ What can break, and how you would notice
 RASTER_FOLDER = r"D:\Modelo_LAPIG\rasters_binarios"
 RASTER_PATTERN = "reclass_{year}.tif"          # file name for each year
 GRID_SHAPEFILE = r"D:\Modelo_LAPIG\grids\hex_20000ha.shp"
-PUBLISHED_EII_CSV = r"data/eii_HEX20_annual.csv"   # used only for validation
+PUBLISHED_EII_CSV = r"D:\Modelo_LAPIG\phase2_annual\eii_HEX20_annual.csv"   # used only for validation
 OUTPUT_FOLDER = r"D:\Modelo_LAPIG\block3_raster_checks"
 YEARS = [1986, 2004, 2023]                     # keep short: each year is one full pass
 NODATA = 255                                   # outside-domain value (never 0)
@@ -279,6 +279,8 @@ def ols(y, X):
 published = None
 if os.path.exists(PUBLISHED_EII_CSV):
     published = pd.read_csv(PUBLISHED_EII_CSV, encoding="utf-8-sig").set_index("ID_UNICO")
+else:
+    say(f"WARNING: {PUBLISHED_EII_CSV} not found — validation against the pipeline will be SKIPPED.")
 
 for year in YEARS:
     df = process_year(year)
