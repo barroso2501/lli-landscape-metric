@@ -173,3 +173,45 @@ Tested on a synthetic raster and grid. The pixel-count emulation reproduces
 4. **A12 — valid-data coverage** of interior and perimeter for every cell.
 
 **Please send back** `raster_checks_summary.txt` and `orientation_diagnostic.csv`.
+
+### 6.1 Results of the local run (author's machine, 1986 / 2004 / 2023) — [verified]
+
+Files: `results/block3/raster/` (summary, orientation diagnostic, per-cell tables).
+
+- **Validation:** the emulated pixel-count LLI and Area reproduce the published matrices
+  (max |diff| 0.0001, i.e. 4-decimal rounding).
+- **A7:** confirmed (see §5).
+- **A8 — weighting is negligible.** Pixel-count vs length-weighted LLI: mean difference
+  0.0000, SD 0.005–0.007. The full perimeter equals the mean of the six segments. The
+  implementation choice does not affect results. The 0.003 offset reported in outline §4.6
+  is not reproduced when segments share one raster window; it most likely comes from the
+  per-segment bounding-box windows used by the segment notebook.
+- **A12 — rejected.** All 11,500 cells have 100% valid interior and perimeter pixels, so
+  the domain contains no 255 pixels. The cells with large year-to-year swings (IDs 1, 2,
+  116–123, …) are fully covered. They lie in the south-western corner of the grid (rows
+  0–1, columns 0–7), consistent with Pantanal wetland classification dynamics
+  (hypothesis).
+- **A1 — line-sampling null model.** Inner rings of equal total length compared with the
+  perimeter (both regressed on own and mean neighbour Area):
+
+| Year | Residual SD perimeter | Residual SD rings | Perimeter variance beyond ring-level error | \|δ\| > 0.10 perimeter / rings | Type I+II perimeter / rings |
+|---|---|---|---|---|---|
+| 1986 | 0.046 | 0.035 | 41% | 8.4% / 2.8% | 2.8% / 1.7% |
+| 2004 | 0.059 | 0.045 | 42% | 15.1% / 5.2% | 6.3% / 3.8% |
+| 2023 | 0.064 | 0.049 | 43% | 17.6% / 6.8% | 8.1% / 5.4% |
+
+**Reading.**
+- About **60% of the perimeter's residual variance is at the level expected from sampling
+  cover along any line of the same length**. The remaining ~40% is structure specific to
+  the boundary strip: fine-scale habitat arrangement at the cell edge that neither own nor
+  neighbour Area captures.
+- About **two thirds of the Type I+II frequency would arise with any interior line of
+  equal length**, so most "divergent states" are produced by line sampling near τ = 0.5,
+  not by the boundary.
+- Combined with §5, the boundary-specific component is real but did not predict future
+  habitat loss. Its ecological meaning (e.g. for movement across cell boundaries) remains
+  untested.
+- Caveat: the rings sample the cell core and are more constrained by Area than the
+  perimeter, which is half outside the interior. The ring comparison is therefore a
+  benchmark of line-sampling error, not an exact null.
+

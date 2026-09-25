@@ -1,0 +1,39 @@
+Grid: 11500 cells | CRS: South_America_Albers_Equal_Area_Conic
+
+[A7] Orientation diagnostic
+  vertices per cell: {6: 11500} | rings counter-clockwise: 0%
+    seg 0 (w1): traversal 240°  faces 120°  (n=11500)
+    seg 1 (w2): traversal 180°  faces 180°  (n=11500)
+    seg 2 (w3): traversal 120°  faces 240°  (n=11500)
+    seg 3 (w4): traversal  60°  faces 300°  (n=11500)
+    seg 4 (w5): traversal   0°  faces   0°  (n=11500)
+    seg 5 (w6): traversal 300°  faces  60°  (n=11500)
+
+1986: already complete — loading D:\EII_Landscape\block3_raster_checks\cells_1986.csv
+
+===== 1986 =====
+  Validation w_px vs published eii: max |diff| 0.0001, mean 0.00002
+  [A8] Weighting
+    w_px - w_len: mean -0.0000, SD 0.0048, max |.| 0.0308
+    full-perimeter w_px - mean of 6 segment w_px: mean -0.0000
+    full-perimeter w_len - mean of 6 segment w_len: mean +0.0000 (~0 means length-weighting removes the offset)
+  [A12] Cells with valid fraction < 50% (interior or perimeter): 0; IDs: []
+  [A1] Null model: perimeter vs inner rings of equal total length
+    perimeter w_px  : SD(delta) 0.0543; |delta|>0.10 8.4%; w ~ own Area 0.627 + nbr Area 0.386 (R² 0.942); residual SD 0.0460
+    perimeter w_len : SD(delta) 0.0538; |delta|>0.10 8.2%; w ~ own Area 0.631 + nbr Area 0.382 (R² 0.943); residual SD 0.0455
+    inner rings     : SD(delta) 0.0371; |delta|>0.10 2.8%; w ~ own Area 1.157 + nbr Area -0.166 (R² 0.970); residual SD 0.0351
+    Type I+II share: perimeter 2.8% vs inner rings 1.7%
+Raster CRS: EPSG:4326 | pixel size: (0.00026949458523585647, 0.00026949458523585647)
+
+===== 2023 =====
+  Validation w_px vs published eii: max |diff| 0.0001, mean 0.00002
+  [A8] Weighting
+    w_px - w_len: mean +0.0000, SD 0.0069, max |.| 0.0377
+    full-perimeter w_px - mean of 6 segment w_px: mean -0.0000
+    full-perimeter w_len - mean of 6 segment w_len: mean +0.0000 (~0 means length-weighting removes the offset)
+  [A12] Cells with valid fraction < 50% (interior or perimeter): 0; IDs: []
+  [A1] Null model: perimeter vs inner rings of equal total length
+    perimeter w_px  : SD(delta) 0.0756; |delta|>0.10 17.6%; w ~ own Area 0.645 + nbr Area 0.370 (R² 0.945); residual SD 0.0648
+    perimeter w_len : SD(delta) 0.0752; |delta|>0.10 17.3%; w ~ own Area 0.646 + nbr Area 0.369 (R² 0.946); residual SD 0.0643
+    inner rings     : SD(delta) 0.0514; |delta|>0.10 6.8%; w ~ own Area 1.150 + nbr Area -0.156 (R² 0.972); residual SD 0.0487
+    Type I+II share: perimeter 8.1% vs inner rings 5.4%
